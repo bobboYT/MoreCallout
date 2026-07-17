@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+header {
+    background: #1a1a2e;
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 3px solid #16213e;
+}
+
+header h1 {
+    color: #e94560;
+    margin-bottom: 0.5rem;
+}
+
+nav {
+    margin-top: 1rem;
+}
+
+nav a {
+    color: #a0a0a0;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #e94560;
+}
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.btn-download {
+    display: inline-block;
+    background: #e94560;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-download:hover {
+    background: #c73e54;
+}
+
+section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: #1a1a2e;
+    border-radius: 10px;
+}
+
+h3 {
+    color: #e94560;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #2a2a3e;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #1a1a2e;
+    margin-top: 3rem;
+}
+
+footer a {
+    color: #e94560;
+}
