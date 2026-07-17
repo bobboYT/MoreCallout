@@ -18,7 +18,32 @@
             --border: #2a2a3e;
             --beta-warning: #f59e0b;
             --stable-green: #22c55e;
+            --bg-light: #f5f5f7;
+            --card-light: #ffffff;
+            --text-light: #1a1a2e;
+            --text-muted-light: #6b7280;
+            --border-light: #e5e7eb;
         }
+        [data-theme="light"] {
+            --bg-dark: var(--bg-light);
+            --bg-card: var(--card-light);
+            --text: var(--text-light);
+            --text-muted: var(--text-muted-light);
+            --border: var(--border-light);
+        }
+        [data-theme="light"] .hero h2 { color: var(--text-light); }
+        [data-theme="light"] .feature-box h3 { color: var(--text-light); }
+        [data-theme="light"] .callout-name { color: var(--text-light); }
+        [data-theme="light"] .download-version { color: var(--text-light); }
+        [data-theme="light"] .changelog-section-title { color: var(--text-light); }
+        [data-theme="light"] .code-block { background: #f0f0f5; border-color: #d1d5db; color: #374151; }
+        [data-theme="light"] .gallery-placeholder { background: #f0f0f5; border-color: #d1d5db; }
+        [data-theme="light"] .summary-box { background: #e8e8ed; }
+        [data-theme="light"] .config-table th { background: #e8e8ed; }
+        [data-theme="light"] .callout-tag { background: #e8e8ed; border-color: #d1d5db; }
+        [data-theme="light"] .beta-banner { background: rgba(245, 158, 11, 0.08); }
+        [data-theme="light"] .download-card:hover, [data-theme="light"] .feature-box:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        [data-theme="light"] header { border-bottom-color: #e5e7eb; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg-dark);
@@ -28,12 +53,93 @@
         }
         header {
             background: var(--bg-card);
-            padding: 1.5rem 2rem;
+            padding: 0.8rem 2rem 0.6rem 2rem;
             text-align: center;
             border-bottom: 3px solid #16213e;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
+            transform: translateY(0);
+            transition: transform 0.35s ease, background 0.3s, padding 0.3s;
+        }
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.15rem;
+        }
+        header p {
+            font-size: 0.85rem;
+            margin-bottom: 0.2rem;
+        }
+        header nav {
+            margin-top: 0.5rem;
+        }
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        header.scrolled {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 2rem;
+        }
+        header.scrolled h1 {
+            font-size: 1.4rem;
+            margin-bottom: 0.1rem;
+        }
+        header.scrolled p {
+            font-size: 0.8rem;
+        }
+        header.scrolled nav {
+            margin-top: 0.4rem;
+        }
+        [data-theme="light"] header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom-color: #e5e7eb;
+        }
+        [data-theme="light"] header {
+            border-bottom-color: #e5e7eb;
+        }
+        main {
+            padding-top: 140px;
+        }
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-top:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+        [data-theme="light"] .scroll-top {
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            main { padding-top: 160px; }
         }
         header h1 { color: var(--accent); margin-bottom: 0.3rem; font-size: 2rem; }
         header p { color: var(--text-muted); font-size: 1rem; }
@@ -287,6 +393,107 @@
         }
         footer a { color: var(--accent); text-decoration: none; }
 
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-left: 8px;
+        }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+        [data-theme="light"] .theme-toggle { border-color: var(--border-light); }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ===== FAQ SECTION ===== */
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .faq-item:hover { border-color: var(--accent); }
+        .faq-question {
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #fff;
+            transition: color 0.3s;
+        }
+        .faq-question:hover { color: var(--accent); }
+        .faq-icon { transition: transform 0.3s; font-size: 1.2rem; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+            padding: 0 1.5rem 1.2rem 1.5rem;
+        }
+        [data-theme="light"] .faq-question { color: var(--text-light); }
+
+        /* ===== NEWS SECTION ===== */
+        .news-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .news-card:hover { transform: translateX(5px); border-left-width: 6px; }
+        .news-date {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .news-title {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+        .news-desc { color: var(--text-muted); font-size: 0.9rem; }
+        [data-theme="light"] .news-title { color: var(--text-light); }
+        .news-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: #1a1a2e;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+
         /* ===== GALLERY ===== */
         .gallery-section {
             margin-top: 3rem;
@@ -366,6 +573,41 @@
             background: var(--accent);
             transform: scale(1.3);
         }
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-top:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+        [data-theme="light"] .scroll-top {
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.2);
+        }
+
         @media (max-width: 768px) {
             .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
             header { padding: 1rem; }
@@ -471,6 +713,7 @@
     <div class="lang-switcher">
         <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
         <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button>
     </div>
     <h1>More Callout</h1>
     <p data-en="Advanced callout plugin for LSPDFR" data-it="Plugin callout avanzato per LSPDFR">Advanced callout plugin for LSPDFR</p>
@@ -479,10 +722,12 @@
         <button class="nav-btn" onclick="showSection('callouts', this)" data-en="Callouts" data-it="Chiamate">Callouts</button>
         <button class="nav-btn" onclick="showSection('download', this)" data-en="Download" data-it="Download">Download</button>
         <button class="nav-btn" onclick="showSection('config', this)" data-en="Config" data-it="Configurazione">Config</button>
+        <button class="nav-btn" onclick="showSection('faq', this)" data-en="FAQ" data-it="FAQ">FAQ</button>
         <button class="nav-btn" onclick="showSection('changelog', this)" data-en="Changelog" data-it="Changelog">Changelog</button>
     </nav>
 </header>
 
+<div style="height: 70px;"></div>
 <main>
 
 <!-- HOME SECTION -->
@@ -507,22 +752,22 @@
         </div>
     </div>
     <div class="features-grid">
-        <div class="feature-box">
+        <div class="feature-box reveal">
             <div class="icon">🎯</div>
             <h3 data-en="58+ Callouts" data-it="58+ Callout">58+ Callouts</h3>
             <p data-en="From minor traffic stops to active shooters, every shift feels different." data-it="Da semplici fermate a sparatorie, ogni turno e diverso.">From minor traffic stops to active shooters, every shift feels different.</p>
         </div>
-        <div class="feature-box">
+        <div class="feature-box reveal">
             <div class="icon">⚙️</div>
             <h3 data-en="Highly Configurable" data-it="Altamente Configurabile">Highly Configurable</h3>
             <p data-en="Toggle individual callouts, adjust spawn rates, distances, and difficulty via INI file." data-it="Attiva/disattiva singoli callout, regola spawn, distanze e difficolta via file INI.">Toggle individual callouts, adjust spawn rates, distances, and difficulty via INI file.</p>
         </div>
-        <div class="feature-box">
+        <div class="feature-box reveal">
             <div class="icon">🌍</div>
             <h3 data-en="Bilingual Support" data-it="Supporto Bilingue">Bilingual Support</h3>
             <p data-en="Full English and Italian language support for all callouts and UI." data-it="Supporto completo in inglese e italiano per tutti i callout e l'interfaccia.">Full English and Italian language support for all callouts and UI.</p>
         </div>
-        <div class="feature-box">
+        <div class="feature-box reveal">
             <div class="icon">🔄</div>
             <h3 data-en="Regular Updates" data-it="Aggiornamenti Regolari">Regular Updates</h3>
             <p data-en="New callouts and bug fixes with every version. Active development." data-it="Nuovi callout e bug fix ad ogni versione. Sviluppo attivo.">New callouts and bug fixes with every version. Active development.</p>
@@ -537,6 +782,26 @@
             <li>Script Hook V</li>
         </ul>
     </div>
+
+    <!-- NEWS FEED -->
+    <div class="card reveal">
+        <h3 data-en="Latest News" data-it="Ultime Novità">Latest News</h3>
+        <div class="news-card">
+            <div class="news-date">16 July 2026 <span class="news-badge">BETA</span></div>
+            <div class="news-title" data-en="v0.0.0.9 Beta is now available!" data-it="v0.0.0.9 Beta è ora disponibile!">v0.0.0.9 Beta is now available!</div>
+            <div class="news-desc" data-en="4 new callouts added: HostageSituation, BankRobbery, ActiveShooter, and HighSpeedPursuit. Try them now and share your feedback on Discord!" data-it="Aggiunti 4 nuovi callout: HostageSituation, BankRobbery, ActiveShooter e HighSpeedPursuit. Provali ora e condividi il tuo feedback su Discord!">4 new callouts added: HostageSituation, BankRobbery, ActiveShooter, and HighSpeedPursuit. Try them now and share your feedback on Discord!</div>
+        </div>
+        <div class="news-card reveal reveal-delay-1">
+            <div class="news-date">11 July 2026</div>
+            <div class="news-title" data-en="v0.0.0.8 Stable released" data-it="Rilasciata v0.0.0.8 Stable">v0.0.0.8 Stable released</div>
+            <div class="news-desc" data-en="Major bug fixes and 3 new burglary callouts. All users are recommended to update for the best experience." data-it="Correzioni bug importanti e 3 nuovi callout per furti. Tutti gli utenti sono invitati ad aggiornare per la migliore esperienza.">Major bug fixes and 3 new burglary callouts. All users are recommended to update for the best experience.</div>
+        </div>
+        <div class="news-card reveal reveal-delay-2">
+            <div class="news-date">4 July 2026 <span class="news-badge">UPDATE</span></div>
+            <div class="news-title" data-en="Discord server is now open!" data-it="Il server Discord è ora aperto!">Discord server is now open!</div>
+            <div class="news-desc" data-en="Join our community for support, beta testing, and to suggest new callout ideas. Link in the footer!" data-it="Unisciti alla nostra community per supporto, beta testing e per suggerire nuove idee per i callout. Link nel footer!">Join our community for support, beta testing, and to suggest new callout ideas. Link in the footer!</div>
+        </div>
+    </div>
 </section>
 
 <!-- CALLOUTS SECTION -->
@@ -546,7 +811,7 @@
         <div class="total">58</div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>📋 <span data-en="Public Order & Common Reports" data-it="Ordine Pubblico e Rapporti Comuni">Public Order & Common Reports</span> <span class="count">13</span></h2>
         <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Abandoned Vehicle</div><div class="callout-desc" data-en="A car left parked in the same spot for days, potentially stolen, missing license plates, or creating a hazard." data-it="Un'auto parcheggiata nello stesso posto da giorni, potenzialmente rubata, senza targa o che crea pericolo.">A car left parked in the same spot for days, potentially stolen, missing license plates, or creating a hazard.</div></div></div>
         <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Civilian Fight</div><div class="callout-desc" data-en="Two or more citizens involved in a physical altercation or a heated verbal shouting match in a public area." data-it="Due o piu cittadini coinvolti in una rissa fisica o in un acceso alterco verbale in area pubblica.">Two or more citizens involved in a physical altercation or a heated verbal shouting match in a public area.</div></div></div>
@@ -563,7 +828,7 @@
         <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Harassing homeless person</div><div class="callout-desc" data-en="A transient individual aggressively panhandling, yelling at pedestrians, or blocking the entrance to a business." data-it="Un senzatetto che chiede l'elemosina in modo aggressivo, urla ai passanti o blocca l'ingresso di un'attivita.">A transient individual aggressively panhandling, yelling at pedestrians, or blocking the entrance to a business.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>🚗 <span data-en="Traffic & Road Safety" data-it="Traffico e Sicurezza Stradale">Traffic & Road Safety</span> <span class="count">10</span></h2>
         <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Minor Traffic Accident</div><div class="callout-desc" data-en="A fender bender between vehicles with property damage only and no severe injuries; drivers might be arguing." data-it="Un tamponamento tra veicoli con solo danni materiali e nessun ferito grave; i conducenti potrebbero litigare.">A fender bender between vehicles with property damage only and no severe injuries; drivers might be arguing.</div></div></div>
         <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Vehicle Obstruction</div><div class="callout-desc" data-en="A car double-parked, blocking a driveway, or stopped dead in the middle of a lane, heavily disrupting traffic." data-it="Un'auto in doppia fila, che blocca un passo carraio o ferma in mezzo alla corsia, interrompendo gravemente il traffico.">A car double-parked, blocking a driveway, or stopped dead in the middle of a lane, heavily disrupting traffic.</div></div></div>
@@ -577,7 +842,7 @@
         <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">HighSpeedPursuit <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="Dynamic pursuit with multiple routes, roadblocks, and suspect behavior variations." data-it="Inseguimento dinamico con percorsi multipli, posti di blocco e variazioni di comportamento del sospetto.">Dynamic pursuit with multiple routes, roadblocks, and suspect behavior variations.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>💰 <span data-en="Property Crimes (Theft & Burglary)" data-it="Reati contro il Patrimonio (Furto e Scasso)">Property Crimes (Theft & Burglary)</span> <span class="count">6</span></h2>
         <div class="callout"><div class="callout-icon">💰</div><div class="callout-content"><div class="callout-name">Simple Robbery</div><div class="callout-desc" data-en="A theft committed using force, intimidation, or direct threats against a victim (like a purse snatching), but without firearms." data-it="Un furto commesso con violenza, intimidazione o minacce dirette contro una vittima (come uno scippo), ma senza armi da fuoco.">A theft committed using force, intimidation, or direct threats against a victim (like a purse snatching), but without firearms.</div></div></div>
         <div class="callout"><div class="callout-icon">💰</div><div class="callout-content"><div class="callout-name">Car theft in progress</div><div class="callout-desc" data-en="A suspect caught in the act of breaking into a vehicle, smashing windows, or hotwiring it to drive away." data-it="Un sospetto sorpreso mentre forza un veicolo, rompe i vetri o tenta di metterlo in moto per scappare.">A suspect caught in the act of breaking into a vehicle, smashing windows, or hotwiring it to drive away.</div></div></div>
@@ -587,7 +852,7 @@
         <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">BankRobbery <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="Armed robbery of a financial institution with hostage potential and multi-phase getaway." data-it="Rapina armata a un istituto finanziario con potenziale ostaggio e fuga multi-fase.">Armed robbery of a financial institution with hostage potential and multi-phase getaway.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>🔴 <span data-en="Severe & Violent Crimes" data-it="Reati Gravi e Violenti">Severe & Violent Crimes</span> <span class="count">9</span></h2>
         <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Armed Person</div><div class="callout-desc" data-en="Reports of an individual openly carrying or brandishing a firearm, knife, or other dangerous weapon in a public space, causing panic." data-it="Segnalazioni di un individuo che trasporta o sventola apertamente un'arma da fuoco, coltello o altra arma pericolosa in uno spazio pubblico, causando panico.">Reports of an individual openly carrying or brandishing a firearm, knife, or other dangerous weapon in a public space, causing panic.</div></div></div>
         <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Wanted Person Spotted</div><div class="callout-desc" data-en="An officer or a citizen recognizes a suspect on the street who has an active arrest warrant." data-it="Un agente o un cittadino riconosce un sospetto per strada con un mandato di arresto attivo.">An officer or a citizen recognizes a suspect on the street who has an active arrest warrant.</div></div></div>
@@ -601,20 +866,20 @@
         <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">HostageSituation <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="Hostage negotiation through dialogue with escalating demands and tactical options." data-it="Negoziazione ostaggi attraverso dialogo con richieste in escalation e opzioni tattiche.">Hostage negotiation through dialogue with escalating demands and tactical options.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>💊 <span data-en="Narcotics & Drugs" data-it="Stupefacenti e Droga">Narcotics & Drugs</span> <span class="count">2</span></h2>
         <div class="callout"><div class="callout-icon">💊</div><div class="callout-content"><div class="callout-name">Drug dealing</div><div class="callout-desc" data-en="Active, ongoing sale of illegal substances in a specific area, such as a local park, alleyway, or street corner." data-it="Vendita attiva e in corso di sostanze illegali in un'area specifica, come un parco, un vicolo o un angolo di strada.">Active, ongoing sale of illegal substances in a specific area, such as a local park, alleyway, or street corner.</div></div></div>
         <div class="callout"><div class="callout-icon">💊</div><div class="callout-content"><div class="callout-name">Suspicious drug exchange</div><div class="callout-desc" data-en="Two individuals caught performing a quick hand-to-hand exchange of cash for small packages before quickly walking away." data-it="Due individui sorpresi mentre effettuano un rapido scambio mano a mano di contanti per piccoli pacchetti prima di allontanarsi rapidamente.">Two individuals caught performing a quick hand-to-hand exchange of cash for small packages before quickly walking away.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>🏥 <span data-en="Medical & Psychiatric Emergencies" data-it="Emergenze Mediche e Psichiatriche">Medical & Psychiatric Emergencies</span> <span class="count">3</span></h2>
         <div class="callout"><div class="callout-icon">🏥</div><div class="callout-content"><div class="callout-name">Missing person</div><div class="callout-desc" data-en="A search operation for an individual (often a minor or an elderly person with medical conditions) who has disappeared and is at risk." data-it="Un'operazione di ricerca per un individuo (spesso un minore o un anziano con condizioni mediche) scomparso e a rischio.">A search operation for an individual (often a minor or an elderly person with medical conditions) who has disappeared and is at risk.</div></div></div>
         <div class="callout"><div class="callout-icon">🏥</div><div class="callout-content"><div class="callout-name">Person experiencing a psychotic episode</div><div class="callout-desc" data-en="An individual undergoing a severe mental health crisis, exhibiting delusions, hallucinations, and unpredictable behavior." data-it="Un individuo in una grave crisi di salute mentale, che manifesta deliri, allucinazioni e comportamenti imprevedibili.">An individual undergoing a severe mental health crisis, exhibiting delusions, hallucinations, and unpredictable behavior.</div></div></div>
         <div class="callout"><div class="callout-icon">🏥</div><div class="callout-content"><div class="callout-name">Attempted suicide</div><div class="callout-desc" data-en="A person threatening to take their own life (e.g., standing on a bridge or rooftop ledge), requiring immediate crisis negotiation." data-it="Una persona che minaccia di togliersi la vita (es. in piedi su un ponte o sul cornicione di un tetto), che richiede una immediata negoziazione di crisi.">A person threatening to take their own life (e.g., standing on a bridge or rooftop ledge), requiring immediate crisis negotiation.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>🚨 <span data-en="Major Accidents & Disasters" data-it="Gravi Incidenti e Disastri">Major Accidents & Disasters</span> <span class="count">7</span></h2>
         <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Serious traffic accident</div><div class="callout-desc" data-en="A high-speed crash resulting in heavily damaged vehicles, victims trapped inside wreckage, and critical medical injuries." data-it="Un incidente ad alta velocita con veicoli gravemente danneggiati, vittime intrappolate nei rottami e ferite mediche critiche.">A high-speed crash resulting in heavily damaged vehicles, victims trapped inside wreckage, and critical medical injuries.</div></div></div>
         <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Motorcycle accident</div><div class="callout-desc" data-en="A severe crash involving a motorcyclist who has been thrown from their bike, usually resulting in major trauma." data-it="Un grave incidente che coinvolge un motociclista scagliato dalla moto, solitamente con traumi maggiori.">A severe crash involving a motorcyclist who has been thrown from their bike, usually resulting in major trauma.</div></div></div>
@@ -625,7 +890,7 @@
         <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Fuel leak</div><div class="callout-desc" data-en="A massive spill of gasoline, diesel, or hazardous materials from a tanker or ruptured fuel tank, posing an extreme fire hazard." data-it="Una massiccia fuoriuscita di benzina, gasolio o materiali pericolosi da un autobotte o serbatoio rotto, con estremo rischio di incendio.">A massive spill of gasoline, diesel, or hazardous materials from a tanker or ruptured fuel tank, posing an extreme fire hazard.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>💣 <span data-en="Explosives & Arson Threats" data-it="Minacce da Esplosivi e Incendi">Explosives & Arson Threats</span> <span class="count">6</span></h2>
         <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Bomb threat</div><div class="callout-desc" data-en="An anonymous tip or call claiming an explosive device has been planted inside a public building, school, or landmark." data-it="Una segnalazione anonima che sostiene che un ordigno esplosivo sia stato piazzato all'interno di un edificio pubblico, scuola o monumento.">An anonymous tip or call claiming an explosive device has been planted inside a public building, school, or landmark.</div></div></div>
         <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Arson</div><div class="callout-desc" data-en="A suspect caught intentionally setting fire to a trash dumpster, vehicle, or structure." data-it="Un sospetto sorpreso mentre apposta incendia un cassonetto, veicolo o struttura.">A suspect caught intentionally setting fire to a trash dumpster, vehicle, or structure.</div></div></div>
@@ -635,7 +900,7 @@
         <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Reported explosion</div><div class="callout-desc" data-en="A loud blast followed by smoke reported by multiple citizens, requiring immediate dispatch to investigate casualties and damage." data-it="Un forte boato seguito da fumo segnalato da piu cittadini, che richiede un immediato invio per indagare su vittime e danni.">A loud blast followed by smoke reported by multiple citizens, requiring immediate dispatch to investigate casualties and damage.</div></div></div>
     </div>
 
-    <div class="category">
+    <div class="category reveal">
         <h2>🐕 <span data-en="Animals & Backup" data-it="Animali e Rinforzi">Animals & Backup</span> <span class="count">2</span></h2>
         <div class="callout"><div class="callout-icon">🐕</div><div class="callout-content"><div class="callout-name">Aggressive dog</div><div class="callout-desc" data-en="A large, loose dog without a leash or muzzle that is growling at, cornering, or actively attacking pedestrians." data-it="Un grosso cane sciolto senza guinzaglio o museruola che ringhia, intrappola o attacca attivamente i pedoni.">A large, loose dog without a leash or muzzle that is growling at, cornering, or actively attacking pedestrians.</div></div></div>
     </div>
@@ -643,7 +908,7 @@
 
 <!-- DOWNLOAD SECTION -->
 <section id="download" class="section">
-    <div class="card">
+    <div class="card reveal">
         <h2 data-en="Download More Callout" data-it="Scarica More Callout">Download More Callout</h2>
         <p data-en="Choose between the stable release (recommended) or the latest beta for testing new features." data-it="Scegli tra la versione stabile (consigliata) o l ultima beta per testare nuove funzionalita.">Choose between the stable release (recommended) or the latest beta for testing new features.</p>
     </div>
@@ -713,17 +978,17 @@
 
 <!-- CONFIG SECTION -->
 <section id="config" class="section config-section">
-    <div class="card">
+    <div class="card reveal">
         <h2 data-en="Configuration Guide" data-it="Guida alla Configurazione">Configuration Guide</h2>
         <p data-en="Customize your callout experience through the INI configuration file." data-it="Personalizza la tua esperienza callout attraverso il file di configurazione .INI">Customize your callout experience through the INI configuration file.</p>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
         <h3 data-en="File Location" data-it="Percorso del File">File Location</h3>
         <div class="code-block">Plugins/LSPDFR/MoreCallout.ini</div>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
         <h3 data-en="General Settings" data-it="Impostazioni Generali">General Settings</h3>
         <table class="config-table">
             <thead>
@@ -747,7 +1012,7 @@
         </table>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
         <h3 data-en="Category Toggles" data-it="Attivazione per Categoria">Category Toggles</h3>
         <table class="config-table">
             <thead>
@@ -771,7 +1036,7 @@
         </table>
     </div>
 
-    <div class="card">
+    <div class="card reveal">
         <h3 data-en="Example INI File" data-it="Esempio di File INI">Example INI File</h3>
         <div class="code-block">; MoreCallout Configuration
 ; Restart LSPDFR after changes
@@ -794,6 +1059,84 @@ EnableMedical=true
 EnableAccidents=true
 EnableExplosives=true
 EnableAnimals=true</div>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section id="faq" class="section">
+    <div class="card reveal">
+        <h2 data-en="Frequently Asked Questions" data-it="Domande Frequenti">Frequently Asked Questions</h2>
+        <p data-en="Find answers to the most common questions about More Callout." data-it="Trova risposte alle domande più comuni su More Callout.">Find answers to the most common questions about More Callout.</p>
+    </div>
+
+    <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <span data-en="The plugin doesn't load, what should I do?" data-it="Il plugin non si carica, cosa devo fare?">The plugin doesn't load, what should I do?</span>
+            <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer" data-en="Make sure you have all requirements installed: GTA V, LSPDFR, Rage Plugin Hook, and Script Hook V. Place the .dll and .ini files in Plugins/LSPDFR/ folder. Restart Rage Plugin Hook after installation." data-it="Assicurati di avere tutti i requisiti installati: GTA V, LSPDFR, Rage Plugin Hook e Script Hook V. Metti i file .dll e .ini nella cartella Plugins/LSPDFR/. Riavvia Rage Plugin Hook dopo l'installazione.">
+            Make sure you have all requirements installed: GTA V, LSPDFR, Rage Plugin Hook, and Script Hook V. Place the .dll and .ini files in Plugins/LSPDFR/ folder. Restart Rage Plugin Hook after installation.
+        </div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-1">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <span data-en="Can I use More Callout with other callout plugins?" data-it="Posso usare More Callout con altri plugin callout?">Can I use More Callout with other callout plugins?</span>
+            <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer" data-en="Yes! More Callout is fully compatible with other callout plugins like StopThePed, Ultimate Backup, and others. Each plugin manages its own callouts independently." data-it="Sì! More Callout è pienamente compatibile con altri plugin callout come StopThePed, Ultimate Backup e altri. Ogni plugin gestisce i propri callout in modo indipendente.">
+            Yes! More Callout is fully compatible with other callout plugins like StopThePed, Ultimate Backup, and others. Each plugin manages its own callouts independently.
+        </div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-2">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <span data-en="How do I disable a specific callout?" data-it="Come disattivo un callout specifico?">How do I disable a specific callout?</span>
+            <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer" data-en="Open the MoreCallout.ini file in Plugins/LSPDFR/ and set the corresponding category to 'false'. For example, set EnableTraffic=false to disable all traffic callouts. You can also adjust individual spawn rates." data-it="Apri il file MoreCallout.ini in Plugins/LSPDFR/ e imposta la categoria corrispondente su 'false'. Ad esempio, imposta EnableTraffic=false per disattivare tutti i callout di traffico. Puoi anche regolare le singole frequenze di spawn.">
+            Open the MoreCallout.ini file in Plugins/LSPDFR/ and set the corresponding category to 'false'. For example, set EnableTraffic=false to disable all traffic callouts. You can also adjust individual spawn rates.
+        </div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-3">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <span data-en="What's the difference between Stable and Beta versions?" data-it="Qual è la differenza tra le versioni Stable e Beta?">What's the difference between Stable and Beta versions?</span>
+            <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer" data-en="Stable versions are thoroughly tested and recommended for normal gameplay. Beta versions contain new features and callouts but may have bugs or compatibility issues. Use Beta only for testing and feedback." data-it="Le versioni Stable sono testate a fondo e consigliate per il gameplay normale. Le versioni Beta contengono nuove funzionalità e callout ma potrebbero avere bug o problemi di compatibilità. Usa la Beta solo per testare e dare feedback.">
+            Stable versions are thoroughly tested and recommended for normal gameplay. Beta versions contain new features and callouts but may have bugs or compatibility issues. Use Beta only for testing and feedback.
+        </div>
+    </div>
+
+    <div class="faq-item reveal">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <span data-en="How do I change the language?" data-it="Come cambio la lingua?">How do I change the language?</span>
+            <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer" data-en="Open MoreCallout.ini and change the Language setting to 'Italian' or 'English'. The change takes effect after restarting LSPDFR. All callout texts and UI elements will switch to your chosen language." data-it="Apri MoreCallout.ini e cambia l'impostazione Language in 'Italian' o 'English'. La modifica ha effetto dopo il riavvio di LSPDFR. Tutti i testi dei callout e gli elementi UI passeranno alla lingua scelta.">
+            Open MoreCallout.ini and change the Language setting to 'Italian' or 'English'. The change takes effect after restarting LSPDFR. All callout texts and UI elements will switch to your chosen language.
+        </div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-1">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <span data-en="Does EasyMode affect all callouts?" data-it="EasyMode influisce su tutti i callout?">Does EasyMode affect all callouts?</span>
+            <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer" data-en="EasyMode makes suspects less aggressive and limits their weapons to basic options only. It applies to most combat-related callouts but doesn't affect accident or medical emergency scenarios. You can enable it in the .ini file." data-it="EasyMode rende i sospetti meno aggressivi e limita le loro armi solo a opzioni base. Si applica alla maggior parte dei callout correlati al combattimento ma non influenza scenari di incidenti o emergenze mediche. Puoi abilitarlo nel file .ini.">
+            EasyMode makes suspects less aggressive and limits their weapons to basic options only. It applies to most combat-related callouts but doesn't affect accident or medical emergency scenarios. You can enable it in the .ini file.
+        </div>
+    </div>
+
+    <div class="faq-item reveal reveal-delay-2">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <span data-en="Where can I report bugs or suggest new callouts?" data-it="Dove posso segnalare bug o suggerire nuovi callout?">Where can I report bugs or suggest new callouts?</span>
+            <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-answer" data-en="Join our Discord server! The link is in the footer of this page. You can report bugs, suggest new callout ideas, get support from the community, and stay updated on upcoming releases." data-it="Unisciti al nostro server Discord! Il link è nel footer di questa pagina. Puoi segnalare bug, suggerire nuove idee per callout, ricevere supporto dalla community e rimanere aggiornato sulle prossime release.">
+            Join our Discord server! The link is in the footer of this page. You can report bugs, suggest new callout ideas, get support from the community, and stay updated on upcoming releases.
+        </div>
     </div>
 </section>
 
@@ -828,7 +1171,7 @@ EnableAnimals=true</div>
         </ul>
     </div>
 
-    <div class="version">
+    <div class="version reveal">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.8</span>
             <span class="badge-latest">LATEST</span>
@@ -853,7 +1196,7 @@ EnableAnimals=true</div>
         </ul>
     </div>
 
-    <div class="version">
+    <div class="version reveal">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.7</span>
         </div>
@@ -863,7 +1206,7 @@ EnableAnimals=true</div>
         </ul>
     </div>
 
-    <div class="version">
+    <div class="version reveal">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.6</span>
         </div>
@@ -878,7 +1221,7 @@ EnableAnimals=true</div>
         </ul>
     </div>
 
-    <div class="version">
+    <div class="version reveal">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.5</span>
         </div>
@@ -888,7 +1231,7 @@ EnableAnimals=true</div>
         </ul>
     </div>
 
-    <div class="version">
+    <div class="version reveal">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.4</span>
         </div>
@@ -898,7 +1241,7 @@ EnableAnimals=true</div>
         </ul>
     </div>
 
-    <div class="version">
+    <div class="version reveal">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.3</span>
         </div>
@@ -924,6 +1267,7 @@ function showSection(sectionId, btn) {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     window.location.hash = sectionId;
+    // Scroll in cima considerando l'header fixed (180px offset)
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -959,23 +1303,132 @@ function switchDownloadTab(btn, panel) {
     document.getElementById('download-' + panel).classList.add('active');
 }
 
+// ===== THEME TOGGLE =====
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.querySelector('.theme-toggle');
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    if (newTheme === 'light') {
+        body.setAttribute('data-theme', 'light');
+        btn.textContent = '☀️';
+        localStorage.setItem('calloutpack-theme', 'light');
+    } else {
+        body.removeAttribute('data-theme');
+        btn.textContent = '🌙';
+        localStorage.setItem('calloutpack-theme', 'dark');
+    }
+}
+
+// ===== FAQ TOGGLE =====
+function toggleFaq(element) {
+    const item = element.parentElement;
+    const isOpen = item.classList.contains('open');
+
+    // Chiudi tutti gli altri
+    document.querySelectorAll('.faq-item.open').forEach(faq => {
+        if (faq !== item) faq.classList.remove('open');
+    });
+
+    // Toggle corrente
+    item.classList.toggle('open', !isOpen);
+}
+
+// ===== SCROLL REVEAL =====
+function initScrollReveal() {
+    const reveals = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    reveals.forEach(el => observer.observe(el));
+}
+
+// ===== SCROLL HEADER & BACK TO TOP =====
+let lastScrollY = 0;
+let ticking = false;
+
+function handleScroll() {
+    const header = document.querySelector('header');
+    const scrollTop = document.querySelector('.scroll-top');
+    const currentScrollY = window.scrollY;
+
+    // Header hide/show
+    if (currentScrollY > 100) {
+        header.classList.add('scrolled');
+        if (currentScrollY > lastScrollY && currentScrollY > 200) {
+            // Scrolling down
+            header.classList.add('hidden');
+        } else {
+            // Scrolling up
+            header.classList.remove('hidden');
+        }
+    } else {
+        header.classList.remove('scrolled', 'hidden');
+    }
+
+    // Back to top button
+    if (scrollTop) {
+        scrollTop.classList.toggle('visible', currentScrollY > 500);
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+}
+
+window.addEventListener('scroll', function() {
+    if (!ticking) {
+        requestAnimationFrame(handleScroll);
+        ticking = true;
+    }
+});
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function() {
+    // Language
     const savedLang = localStorage.getItem('calloutpack-lang');
     if (savedLang && savedLang !== 'en') {
         setLang(savedLang);
     }
+
+    // Theme
+    const savedTheme = localStorage.getItem('calloutpack-theme');
+    const themeBtn = document.querySelector('.theme-toggle');
+    if (savedTheme === 'light') {
+        document.body.setAttribute('data-theme', 'light');
+        if (themeBtn) themeBtn.textContent = '☀️';
+    }
+
+    // Hash navigation
     const hash = window.location.hash.replace('#', '');
     if (hash && document.getElementById(hash)) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById(hash).classList.add('active');
         document.querySelectorAll('.nav-btn').forEach((btn, i) => {
-            const sections = ['home', 'callouts', 'config', 'changelog'];
+            const sections = ['home', 'callouts', 'download', 'config', 'faq', 'changelog'];
             btn.classList.toggle('active', sections[i] === hash);
         });
     }
+
+    // Scroll reveal
+    initScrollReveal();
 });
 </script>
+
+    <button class="scroll-top" onclick="scrollToTop()" title="Back to top">&#8593;</button>
 
 </body>
 </html>
