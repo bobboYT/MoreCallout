@@ -1,1 +1,713 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callout Pack - Elenco Completo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #1a1a2e;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #16213e;
+        }
+
+        header h1 {
+            color: #e94560;
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+        }
+
+        nav {
+            margin-top: 1.5rem;
+        }
+
+        nav a {
+            color: #a0a0a0;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #e94560;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .category {
+            margin: 2.5rem 0;
+            padding: 1.5rem 2rem;
+            background: #1a1a2e;
+            border-radius: 12px;
+            border-left: 4px solid #e94560;
+        }
+
+        .category h2 {
+            color: #e94560;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category h2 .count {
+            background: #e94560;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .callout {
+            padding: 1rem 0;
+            border-bottom: 1px solid #2a2a3e;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .callout:last-child {
+            border-bottom: none;
+        }
+
+        .callout-icon {
+            color: #e94560;
+            font-size: 1.2rem;
+            min-width: 24px;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .callout-content {
+            flex: 1;
+        }
+
+        .callout-name {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+
+        .callout-desc {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+
+        .callout.custom .callout-name {
+            color: #ffd700;
+        }
+
+        .callout.custom .callout-icon {
+            color: #ffd700;
+        }
+
+        .badge-custom {
+            display: inline-block;
+            background: #ffd700;
+            color: #1a1a2e;
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #1a1a2e;
+            margin-top: 3rem;
+            color: #a0a0a0;
+        }
+
+        footer a {
+            color: #e94560;
+            text-decoration: none;
+        }
+
+        .summary {
+            text-align: center;
+            padding: 2rem;
+            background: #16213e;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .summary h3 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary p {
+            color: #a0a0a0;
+        }
+
+        .summary .total {
+            color: #e94560;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <header>
+        <h1>🔵 Callout Pack</h1>
+        <p>Elenco completo di tutti gli scenari disponibili</p>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="callouts.html">Callout</a>
+            <a href="config.html">Configurazione</a>
+            <a href="changelog.html">Changelog</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="summary">
+            <h3>Totale Callout Disponibili</h3>
+            <p class="total">58</p>
+            <p>Inclusi 5 callout personalizzati evidenziati in oro</p>
+        </div>
+
+        <!-- Public Order & Common Reports -->
+        <div class="category">
+            <h2>📋 Public Order & Common Reports <span class="count">13</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Abandoned Vehicle</div>
+                    <div class="callout-desc">A car left parked in the same spot for days, potentially stolen, missing license plates, or creating a hazard.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Civilian Fight</div>
+                    <div class="callout-desc">Two or more citizens involved in a physical altercation or a heated verbal shouting match in a public area.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Intoxicated Person</div>
+                    <div class="callout-desc">An individual who is visibly drunk or high, acting disorderly, and disturbing passersby.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Noise Complaint</div>
+                    <div class="callout-desc">A report regarding extremely loud music, shouting, or late-night disturbances coming from a residence or local venue.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Suspicious Person</div>
+                    <div class="callout-desc">An individual loitering furtively around residential homes or businesses, looking through windows or scouting properties.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Trespassing</div>
+                    <div class="callout-desc">Someone who has entered or refuses to leave private property, a construction site, or a restricted area.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Welfare Check</div>
+                    <div class="callout-desc">A request to check on a citizen who hasn't been heard from in days or who is acting highly unusual, ensuring their safety.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Public Disturbance</div>
+                    <div class="callout-desc">Shouting, fighting, or rowdy behavior that disrupts the peace and quiet of a neighborhood.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Out-of-control party</div>
+                    <div class="callout-desc">A private party that has escalated with too many guests, excessive alcohol consumption, loud music, and potential fights.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Bar fight</div>
+                    <div class="callout-desc">A violent brawl inside or just outside a bar/pub, often fueled by alcohol, with risks of flying bottles or broken furniture.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Violent fans</div>
+                    <div class="callout-desc">Aggressive groups of sports fans causing chaos, riots, or vandalism near a stadium or in city streets.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Protest turned violent</div>
+                    <div class="callout-desc">A peaceful demonstration that degenerates into clashes with law enforcement, property damage, and rioting.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">📌</div>
+                <div class="callout-content">
+                    <div class="callout-name">Harassing homeless person</div>
+                    <div class="callout-desc">A transient individual aggressively panhandling, yelling at pedestrians, or blocking the entrance to a business.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traffic & Road Safety -->
+        <div class="category">
+            <h2>🚗 Traffic & Road Safety <span class="count">10</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Minor Traffic Accident</div>
+                    <div class="callout-desc">A fender bender between vehicles with property damage only and no severe injuries; drivers might be arguing.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Vehicle Obstruction</div>
+                    <div class="callout-desc">A car double-parked, blocking a driveway, or stopped dead in the middle of a lane, heavily disrupting traffic.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">DUI / Drunk driving</div>
+                    <div class="callout-desc">A motorist driving erratically, swerving between lanes, or committing severe traffic violations under the suspected influence of alcohol or drugs.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Stolen vehicle pursuit</div>
+                    <div class="callout-desc">A flagged stolen vehicle is spotted by police, and the driver refuses to pull over, initiating a high-speed pursuit.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Illegal street racing</div>
+                    <div class="callout-desc">Modified cars racing at high speeds on public roads, endangering pedestrians and oncoming traffic.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Taxi with aggressive passenger</div>
+                    <div class="callout-desc">A cab driver requesting immediate assistance because a passenger is being violent, threatening, or refusing to pay.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Suspicious vehicle stopped roadside</div>
+                    <div class="callout-desc">A vehicle parked in a dark, isolated area with its headlights off, with occupants seemingly hiding or doing something illicit.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Person wandering on the highway</div>
+                    <div class="callout-desc">A pedestrian walking dangerously along the shoulder or attempting to cross a high-speed freeway.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚗</div>
+                <div class="callout-content">
+                    <div class="callout-name">Animal on the road</div>
+                    <div class="callout-desc">A large animal (like a deer or a stray dog) wandering onto the roadway, creating a severe crash hazard.</div>
+                </div>
+            </div>
+
+            <div class="callout custom">
+                <div class="callout-icon">⭐</div>
+                <div class="callout-content">
+                    <div class="callout-name">HighSpeedPursuit <span class="badge-custom">CUSTOM</span></div>
+                    <div class="callout-desc">Dynamic pursuit with multiple routes, roadblocks, and suspect behavior variations.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Crimes (Theft & Burglary) -->
+        <div class="category">
+            <h2>💰 Property Crimes (Theft & Burglary) <span class="count">6</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">💰</div>
+                <div class="callout-content">
+                    <div class="callout-name">Simple Robbery</div>
+                    <div class="callout-desc">A theft committed using force, intimidation, or direct threats against a victim (like a purse snatching), but without firearms.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💰</div>
+                <div class="callout-content">
+                    <div class="callout-name">Car theft in progress</div>
+                    <div class="callout-desc">A suspect caught in the act of breaking into a vehicle, smashing windows, or hotwiring it to drive away.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💰</div>
+                <div class="callout-content">
+                    <div class="callout-name">Residential Burglary</div>
+                    <div class="callout-desc">A break-in occurring (or just occurred) at a private house, apartment, or residential estate.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💰</div>
+                <div class="callout-content">
+                    <div class="callout-name">Commercial Burglary</div>
+                    <div class="callout-desc">A forced entry or "smash-and-grab" at a store, office, or shopping mall, typically during closing hours.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💰</div>
+                <div class="callout-content">
+                    <div class="callout-name">Garage Burglary</div>
+                    <div class="callout-desc">A break-in targeting a garage, carport, or storage shed to steal tools, bicycles, or motorcycles.</div>
+                </div>
+            </div>
+
+            <div class="callout custom">
+                <div class="callout-icon">⭐</div>
+                <div class="callout-content">
+                    <div class="callout-name">BankRobbery <span class="badge-custom">CUSTOM</span></div>
+                    <div class="callout-desc">Armed robbery of a financial institution with hostage potential and multi-phase getaway.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Severe & Violent Crimes -->
+        <div class="category">
+            <h2>🔴 Severe & Violent Crimes <span class="count">9</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">🔴</div>
+                <div class="callout-content">
+                    <div class="callout-name">Armed Person</div>
+                    <div class="callout-desc">Reports of an individual openly carrying or brandishing a firearm, knife, or other dangerous weapon in a public space, causing panic.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🔴</div>
+                <div class="callout-content">
+                    <div class="callout-name">Wanted Person Spotted</div>
+                    <div class="callout-desc">An officer or a citizen recognizes a suspect on the street who has an active arrest warrant.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🔴</div>
+                <div class="callout-content">
+                    <div class="callout-name">Stabbing</div>
+                    <div class="callout-desc">A violent assault where a victim has been injured or actively threatened with a knife or sharp object.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🔴</div>
+                <div class="callout-content">
+                    <div class="callout-name">Assault</div>
+                    <div class="callout-desc">A physical attack on an innocent person, with injuries being inflicted in real-time or just before police arrival.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🔴</div>
+                <div class="callout-content">
+                    <div class="callout-name">Domestic violence</div>
+                    <div class="callout-desc">A violent family dispute inside a residence involving active physical altercations or severe threats between partners or relatives.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🔴</div>
+                <div class="callout-content">
+                    <div class="callout-name">Armed wanted suspect</div>
+                    <div class="callout-desc">Locating a dangerous, wanted fugitive who is confirmed to be armed and likely to shoot to avoid capture.</div>
+                </div>
+            </div>
+
+            <div class="callout custom">
+                <div class="callout-icon">⭐</div>
+                <div class="callout-content">
+                    <div class="callout-name">ActiveShooter <span class="badge-custom">CUSTOM</span></div>
+                    <div class="callout-desc">Multiple armed suspects in a public location with panicked civilians and ongoing casualties.</div>
+                </div>
+            </div>
+
+            <div class="callout custom">
+                <div class="callout-icon">⭐</div>
+                <div class="callout-content">
+                    <div class="callout-name">Officer Down <span class="badge-custom">CUSTOM</span></div>
+                    <div class="callout-desc">An injured NPC officer is found on the ground. EMS is automatically dispatched while the suspect attempts to flee.</div>
+                </div>
+            </div>
+
+            <div class="callout custom">
+                <div class="callout-icon">⭐</div>
+                <div class="callout-content">
+                    <div class="callout-name">HostageSituation <span class="badge-custom">CUSTOM</span></div>
+                    <div class="callout-desc">Hostage negotiation through dialogue with escalating demands and tactical options.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Narcotics & Drugs -->
+        <div class="category">
+            <h2>💊 Narcotics & Drugs <span class="count">2</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">💊</div>
+                <div class="callout-content">
+                    <div class="callout-name">Drug dealing</div>
+                    <div class="callout-desc">Active, ongoing sale of illegal substances in a specific area, such as a local park, alleyway, or street corner.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💊</div>
+                <div class="callout-content">
+                    <div class="callout-name">Suspicious drug exchange</div>
+                    <div class="callout-desc">Two individuals caught performing a quick hand-to-hand exchange of cash for small packages before quickly walking away.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Medical & Psychiatric Emergencies -->
+        <div class="category">
+            <h2>🏥 Medical & Psychiatric Emergencies <span class="count">3</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">🏥</div>
+                <div class="callout-content">
+                    <div class="callout-name">Missing person</div>
+                    <div class="callout-desc">A search operation for an individual (often a minor or an elderly person with medical conditions) who has disappeared and is at risk.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🏥</div>
+                <div class="callout-content">
+                    <div class="callout-name">Person experiencing a psychotic episode</div>
+                    <div class="callout-desc">An individual undergoing a severe mental health crisis, exhibiting delusions, hallucinations, and unpredictable behavior.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🏥</div>
+                <div class="callout-content">
+                    <div class="callout-name">Attempted suicide</div>
+                    <div class="callout-desc">A person threatening to take their own life (e.g., standing on a bridge or rooftop ledge), requiring immediate crisis negotiation.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Major Accidents & Disasters -->
+        <div class="category">
+            <h2>🚨 Major Accidents & Disasters (Joint Fire/EMS Response) <span class="count">7</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">🚨</div>
+                <div class="callout-content">
+                    <div class="callout-name">Serious traffic accident</div>
+                    <div class="callout-desc">A high-speed crash resulting in heavily damaged vehicles, victims trapped inside wreckage, and critical medical injuries.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚨</div>
+                <div class="callout-content">
+                    <div class="callout-name">Motorcycle accident</div>
+                    <div class="callout-desc">A severe crash involving a motorcyclist who has been thrown from their bike, usually resulting in major trauma.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚨</div>
+                <div class="callout-content">
+                    <div class="callout-name">Overturned truck</div>
+                    <div class="callout-desc">A semi-truck or heavy commercial vehicle that has flipped over, blocking multiple lanes and potentially spilling cargo.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚨</div>
+                <div class="callout-content">
+                    <div class="callout-name">Train accident</div>
+                    <div class="callout-desc">A train derailment or a violent collision between a locomotive and a vehicle stuck at a railroad crossing.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚨</div>
+                <div class="callout-content">
+                    <div class="callout-name">Small plane crash</div>
+                    <div class="callout-desc">A light aircraft or private plane that has gone down in an urban area, field, or forest.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚨</div>
+                <div class="callout-content">
+                    <div class="callout-name">Car in the river</div>
+                    <div class="callout-desc">A vehicle that has veered off the road and plunged into a body of water, leaving occupants at risk of drowning.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🚨</div>
+                <div class="callout-content">
+                    <div class="callout-name">Fuel leak</div>
+                    <div class="callout-desc">A massive spill of gasoline, diesel, or hazardous materials from a tanker or ruptured fuel tank, posing an extreme fire hazard.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explosives & Arson Threats -->
+        <div class="category">
+            <h2>💣 Explosives & Arson Threats <span class="count">6</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">💣</div>
+                <div class="callout-content">
+                    <div class="callout-name">Bomb threat</div>
+                    <div class="callout-desc">An anonymous tip or call claiming an explosive device has been planted inside a public building, school, or landmark.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💣</div>
+                <div class="callout-content">
+                    <div class="callout-name">Arson</div>
+                    <div class="callout-desc">A suspect caught intentionally setting fire to a trash dumpster, vehicle, or structure.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💣</div>
+                <div class="callout-content">
+                    <div class="callout-name">False fire alarm</div>
+                    <div class="callout-desc">The malicious or accidental pulling of a fire alarm lever in a public building when no actual emergency exists.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💣</div>
+                <div class="callout-content">
+                    <div class="callout-name">Suspicious package</div>
+                    <div class="callout-desc">An unattended box, backpack, or sealed container left in a crowded area (like a transit station) that could be an IED.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💣</div>
+                <div class="callout-content">
+                    <div class="callout-name">Abandoned briefcase</div>
+                    <div class="callout-desc">A stray briefcase left behind on a bench or post office counter, treated with extreme caution due to explosive risks.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">💣</div>
+                <div class="callout-content">
+                    <div class="callout-name">Reported explosion</div>
+                    <div class="callout-desc">A loud blast followed by smoke reported by multiple citizens, requiring immediate dispatch to investigate casualties and damage.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animals & Backup -->
+        <div class="category">
+            <h2>🐕 Animals & Backup <span class="count">2</span></h2>
+
+            <div class="callout">
+                <div class="callout-icon">🐕</div>
+                <div class="callout-content">
+                    <div class="callout-name">Callout Helpers</div>
+                    <div class="callout-desc">A call for immediate backup from fellow officers who are outnumbered, facing resistance, or handling a volatile scene.</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-icon">🐕</div>
+                <div class="callout-content">
+                    <div class="callout-name">Aggressive dog</div>
+                    <div class="callout-desc">A large, loose dog without a leash or muzzle that is growling at, cornering, or actively attacking pedestrians.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 - Callout Pack per LSPDFR | <a href="https://discord.gg/...">Discord</a> | <a href="https://github.com/...">GitHub</a></p>
+    </footer>
+</body>
+</html>
