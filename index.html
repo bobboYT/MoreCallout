@@ -1,59 +1,686 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoreCallout - Callout Pack LSPDFR</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Callout Pack - LSPDFR Plugin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #1a1a2e;
+            --accent: #e94560;
+            --accent-hover: #c73e54;
+            --gold: #ffd700;
+            --text: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border: #2a2a3e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        header {
+            background: var(--bg-card);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid #16213e;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header h1 { color: var(--accent); margin-bottom: 0.3rem; font-size: 2rem; }
+        header p { color: var(--text-muted); font-size: 1rem; }
+        .lang-switcher {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            display: flex;
+            gap: 8px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .lang-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+        nav {
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-btn:hover { color: var(--accent); background: rgba(233, 69, 96, 0.1); }
+        .nav-btn.active { color: var(--accent); background: rgba(233, 69, 96, 0.15); }
+        .nav-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        main { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent);
+        }
+        .card h2, .card h3 { color: var(--accent); margin-bottom: 1rem; }
+        .card p, .card li { color: var(--text-muted); }
+        .hero { text-align: center; padding: 3rem 1rem; }
+        .hero h2 { font-size: 2.2rem; color: #fff; margin-bottom: 1rem; }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; }
+        .btn-download {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+        .btn-download:hover { background: var(--accent-hover); }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .feature-box {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-box:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .feature-box .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .feature-box h3 { color: #fff; margin-bottom: 0.5rem; }
+        .feature-box p { color: var(--text-muted); font-size: 0.95rem; }
+        .requirements { margin-top: 2rem; }
+        .requirements ul { list-style: none; padding: 0; }
+        .requirements li { padding: 0.4rem 0; color: var(--text-muted); }
+        .requirements li::before { content: "✓ "; color: var(--accent); font-weight: bold; }
+        .category {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+        .category h2 {
+            color: var(--accent);
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .category h2 .count {
+            background: var(--accent);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        .callout {
+            padding: 0.9rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .callout:last-child { border-bottom: none; }
+        .callout-icon { color: var(--accent); font-size: 1.1rem; min-width: 22px; text-align: center; margin-top: 2px; }
+        .callout-content { flex: 1; }
+        .callout-name { font-weight: 600; color: #fff; font-size: 1rem; margin-bottom: 2px; }
+        .callout-desc { color: var(--text-muted); font-size: 0.9rem; }
+        .callout.new .callout-name { color: var(--gold); }
+        .callout.new .callout-icon { color: var(--gold); }
+        .badge-new {
+            display: inline-block;
+            background: var(--gold);
+            color: #1a1a2e;
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            margin-left: 8px;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+        .summary-box {
+            text-align: center;
+            padding: 2rem;
+            background: #16213e;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        .summary-box .total { color: var(--accent); font-size: 2.5rem; font-weight: bold; }
+        .version {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+        .version.latest { border-left-color: var(--gold); }
+        .version-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .version-number { font-size: 1.3rem; font-weight: bold; color: var(--accent); }
+        .version.latest .version-number { color: var(--gold); }
+        .badge-latest {
+            background: var(--gold);
+            color: #1a1a2e;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .changelog-section-title {
+            color: #fff;
+            font-weight: 600;
+            margin: 1.2rem 0 0.6rem 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feature-list, .fix-list { list-style: none; padding-left: 0; }
+        .feature-list li, .fix-list li {
+            padding: 0.4rem 0 0.4rem 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .feature-list li::before { content: "✅"; position: absolute; left: 0; }
+        .fix-list li::before { content: "🔧"; position: absolute; left: 0; }
+        .callout-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.5rem; }
+        .callout-tag {
+            display: inline-block;
+            background: #16213e;
+            color: var(--accent);
+            padding: 3px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+        .config-section h3 { color: var(--accent); margin: 1.5rem 0 0.8rem; font-size: 1.2rem; }
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+        .config-table th, .config-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .config-table th { background: #16213e; color: var(--accent); font-weight: 600; }
+        .config-table td { color: var(--text-muted); }
+        .config-table tr:hover td { background: rgba(233, 69, 96, 0.05); }
+        .code-block {
+            background: #0d0d1a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: #c0c0c0;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-card);
+            margin-top: 3rem;
+            color: var(--text-muted);
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        @media (max-width: 768px) {
+            .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
+            header { padding: 1rem; }
+            header h1 { font-size: 1.5rem; }
+            .nav-btn { padding: 8px 14px; font-size: 0.9rem; }
+            main { padding: 1rem; }
+            .category, .version, .card { padding: 1rem; }
+        }
+    </style>
+<base target="_blank">
 </head>
 <body>
-    <header>
-        <h1>🔵 MoreCallout </h1>
-        <p>Callout pack avanzato per LSPDFR - 60+ scenari realistici</p>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="callouts.html">Callout</a>
-            <a href="config.html">Configurazione</a>
-            <a href="changelog.html">Changelog</a>
-        </nav>
-    </header>
 
-    <main>
-        <section class="hero">
-            <h2>Porta il tuo patrolling al livello successivo</h2>
-            <p>60+ callout unici, altamente configurabili, con scenari dinamici e finali multipli.</p>
-            <a href="https://www.lcpdfr.com/downloads/gta5mods/scripts/54634-more-callout/">⬇️ Scarica su LCPDFR</a>
-        </section>
+<header>
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+    </div>
+    <h1>Callout Pack</h1>
+    <p data-en="Advanced callout plugin for LSPDFR" data-it="Plugin callout avanzato per LSPDFR">Advanced callout plugin for LSPDFR</p>
+    <nav>
+        <button class="nav-btn active" onclick="showSection('home', this)" data-en="Home" data-it="Home">Home</button>
+        <button class="nav-btn" onclick="showSection('callouts', this)" data-en="Callouts" data-it="Callout">Callouts</button>
+        <button class="nav-btn" onclick="showSection('config', this)" data-en="Config" data-it="Configurazione">Config</button>
+        <button class="nav-btn" onclick="showSection('changelog', this)" data-en="Changelog" data-it="Changelog">Changelog</button>
+    </nav>
+</header>
 
-        <section class="features">
-            <h3>Caratteristiche principali</h3>
-            <ul>
-                <li>✅ 60+ callout unici (rapine, inseguimenti, domestici, emergenze...)</li>
-                <li>✅ File INI altamente configurabile</li>
-                <li>✅ Supporto per callout diurni/notturni e per zona</li>
-                <li>✅ Aggiornamenti regolari</li>
-            </ul>
-        </section>
+<main>
 
-        <section class="screenshots">
-            <h3>Screenshot</h3>
-            <p><em>Carica le immagini nel repository e linkale qui</em></p>
-            <!-- <img src="screenshot1.jpg" alt="Callout esempio"> -->
-        </section>
+<!-- HOME SECTION -->
+<section id="home" class="section active">
+    <div class="hero">
+        <h2 data-en="Take Your Patrolling to the Next Level" data-it="Porta il Tuo Patrolling al Livello Successivo">Take Your Patrolling to the Next Level</h2>
+        <p data-en="58+ unique callouts, highly configurable, with dynamic scenarios and multiple endings." data-it="58+ callout unici, altamente configurabili, con scenari dinamici e finali multipli.">58+ unique callouts, highly configurable, with dynamic scenarios and multiple endings.</p>
+        <a href="https://www.lcpdfr.com/downloads/..." class="btn-download" data-en="Download on LCPDFR" data-it="Scarica su LCPDFR">Download on LCPDFR</a>
+    </div>
+    <div class="features-grid">
+        <div class="feature-box">
+            <div class="icon">🎯</div>
+            <h3 data-en="58+ Callouts" data-it="58+ Callout">58+ Callouts</h3>
+            <p data-en="From minor traffic stops to active shooters, every shift feels different." data-it="Da semplici fermate a sparatorie, ogni turno e diverso.">From minor traffic stops to active shooters, every shift feels different.</p>
+        </div>
+        <div class="feature-box">
+            <div class="icon">⚙️</div>
+            <h3 data-en="Highly Configurable" data-it="Altamente Configurabile">Highly Configurable</h3>
+            <p data-en="Toggle individual callouts, adjust spawn rates, distances, and difficulty via INI file." data-it="Attiva/disattiva singoli callout, regola spawn, distanze e difficolta via file INI.">Toggle individual callouts, adjust spawn rates, distances, and difficulty via INI file.</p>
+        </div>
+        <div class="feature-box">
+            <div class="icon">🌍</div>
+            <h3 data-en="Bilingual Support" data-it="Supporto Bilingue">Bilingual Support</h3>
+            <p data-en="Full English and Italian language support for all callouts and UI." data-it="Supporto completo in inglese e italiano per tutti i callout e l'interfaccia.">Full English and Italian language support for all callouts and UI.</p>
+        </div>
+        <div class="feature-box">
+            <div class="icon">🔄</div>
+            <h3 data-en="Regular Updates" data-it="Aggiornamenti Regolari">Regular Updates</h3>
+            <p data-en="New callouts and bug fixes with every version. Active development." data-it="Nuovi callout e bug fix ad ogni versione. Sviluppo attivo.">New callouts and bug fixes with every version. Active development.</p>
+        </div>
+    </div>
+    <div class="card requirements">
+        <h3 data-en="Requirements" data-it="Requisiti">Requirements</h3>
+        <ul>
+            <li>GTA V (latest version)</li>
+            <li>RagePluginHook</li>
+            <li>LSPDFR</li>
+            <li>.NET Framework 4.8</li>
+        </ul>
+    </div>
+</section>
 
-        <section class="requirements">
-            <h3>Requisiti</h3>
-            <ul>
-                <li>GTA V </li>
-                <li>RagePluginHook</li>
-                <li>Script Hook V</li>
-                <li>LSPDFR</li>
-            </ul>
-        </section>
-    </main>
+<!-- CALLOUTS SECTION -->
+<section id="callouts" class="section">
+    <div class="summary-box">
+        <h3 data-en="Total Available Callouts" data-it="Totale Callout Disponibili">Total Available Callouts</h3>
+        <div class="total">58</div>
+        <p data-en="Including new callouts highlighted in gold" data-it="Inclusi i nuovi callout evidenziati in oro">Including new callouts highlighted in gold</p>
+    </div>
 
-    <footer>
-        <p>© 2026 - Creato da [Bobbo_17] | <a href="https://discord.gg/CUsD3GTNBq">Discord</a></p>
-    </footer>
+    <div class="category">
+        <h2>📋 <span data-en="Public Order & Common Reports" data-it="Ordine Pubblico e Rapporti Comuni">Public Order & Common Reports</span> <span class="count">13</span></h2>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Abandoned Vehicle</div><div class="callout-desc" data-en="A car left parked in the same spot for days, potentially stolen, missing license plates, or creating a hazard." data-it="Un'auto parcheggiata nello stesso posto da giorni, potenzialmente rubata, senza targa o che crea pericolo.">A car left parked in the same spot for days, potentially stolen, missing license plates, or creating a hazard.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Civilian Fight</div><div class="callout-desc" data-en="Two or more citizens involved in a physical altercation or a heated verbal shouting match in a public area." data-it="Due o piu cittadini coinvolti in una rissa fisica o in un acceso alterco verbale in area pubblica.">Two or more citizens involved in a physical altercation or a heated verbal shouting match in a public area.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Intoxicated Person</div><div class="callout-desc" data-en="An individual who is visibly drunk or high, acting disorderly, and disturbing passersby." data-it="Un individuo visibilmente ubriaco o sotto effetto di droghe, che agisce in modo disordinato e disturba i passanti.">An individual who is visibly drunk or high, acting disorderly, and disturbing passersby.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Noise Complaint</div><div class="callout-desc" data-en="A report regarding extremely loud music, shouting, or late-night disturbances coming from a residence or local venue." data-it="Segnalazione di musica troppo alta, urla o disturbi notturni provenienti da una residenza o locale.">A report regarding extremely loud music, shouting, or late-night disturbances coming from a residence or local venue.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Suspicious Person</div><div class="callout-desc" data-en="An individual loitering furtively around residential homes or businesses, looking through windows or scouting properties." data-it="Un individuo che gira furtivamente intorno a case o attivita commerciali, guardando dalle finestre o sondando proprieta.">An individual loitering furtively around residential homes or businesses, looking through windows or scouting properties.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Trespassing</div><div class="callout-desc" data-en="Someone who has entered or refuses to leave private property, a construction site, or a restricted area." data-it="Qualcuno che e entrato o rifiuta di lasciare una proprieta privata, un cantiere o un'area riservata.">Someone who has entered or refuses to leave private property, a construction site, or a restricted area.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Welfare Check</div><div class="callout-desc" data-en="A request to check on a citizen who hasn't been heard from in days or who is acting highly unusual, ensuring their safety." data-it="Richiesta di verificare le condizioni di un cittadino di cui non si hanno notizie da giorni o che si comporta in modo anomalo.">A request to check on a citizen who hasn't been heard from in days or who is acting highly unusual, ensuring their safety.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Public Disturbance</div><div class="callout-desc" data-en="Shouting, fighting, or rowdy behavior that disrupts the peace and quiet of a neighborhood." data-it="Urla, risse o comportamenti turbolenti che interrompono la pace di un quartiere.">Shouting, fighting, or rowdy behavior that disrupts the peace and quiet of a neighborhood.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Out-of-control party</div><div class="callout-desc" data-en="A private party that has escalated with too many guests, excessive alcohol consumption, loud music, and potential fights." data-it="Una festa privata degenerata con troppi ospiti, alcol eccessivo, musica alta e potenziali risse.">A private party that has escalated with too many guests, excessive alcohol consumption, loud music, and potential fights.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Bar fight</div><div class="callout-desc" data-en="A violent brawl inside or just outside a bar/pub, often fueled by alcohol, with risks of flying bottles or broken furniture." data-it="Una rissa violenta dentro o appena fuori un bar, spesso alimentata dall'alcol, con rischio di bottiglie volanti o mobili rotti.">A violent brawl inside or just outside a bar/pub, often fueled by alcohol, with risks of flying bottles or broken furniture.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Violent fans</div><div class="callout-desc" data-en="Aggressive groups of sports fans causing chaos, riots, or vandalism near a stadium or in city streets." data-it="Gruppi aggressivi di tifosi che causano caos, disordini o vandalismo vicino a uno stadio o per le strade.">Aggressive groups of sports fans causing chaos, riots, or vandalism near a stadium or in city streets.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Protest turned violent</div><div class="callout-desc" data-en="A peaceful demonstration that degenerates into clashes with law enforcement, property damage, and rioting." data-it="Una manifestazione pacifica che degenera in scontri con le forze dell'ordine, danni e disordini.">A peaceful demonstration that degenerates into clashes with law enforcement, property damage, and rioting.</div></div></div>
+        <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Harassing homeless person</div><div class="callout-desc" data-en="A transient individual aggressively panhandling, yelling at pedestrians, or blocking the entrance to a business." data-it="Un senzatetto che chiede l'elemosina in modo aggressivo, urla ai passanti o blocca l'ingresso di un'attivita.">A transient individual aggressively panhandling, yelling at pedestrians, or blocking the entrance to a business.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>🚗 <span data-en="Traffic & Road Safety" data-it="Traffico e Sicurezza Stradale">Traffic & Road Safety</span> <span class="count">10</span></h2>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Minor Traffic Accident</div><div class="callout-desc" data-en="A fender bender between vehicles with property damage only and no severe injuries; drivers might be arguing." data-it="Un tamponamento tra veicoli con solo danni materiali e nessun ferito grave; i conducenti potrebbero litigare.">A fender bender between vehicles with property damage only and no severe injuries; drivers might be arguing.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Vehicle Obstruction</div><div class="callout-desc" data-en="A car double-parked, blocking a driveway, or stopped dead in the middle of a lane, heavily disrupting traffic." data-it="Un'auto in doppia fila, che blocca un passo carraio o ferma in mezzo alla corsia, interrompendo gravemente il traffico.">A car double-parked, blocking a driveway, or stopped dead in the middle of a lane, heavily disrupting traffic.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">DUI / Drunk driving</div><div class="callout-desc" data-en="A motorist driving erratically, swerving between lanes, or committing severe traffic violations under the suspected influence of alcohol or drugs." data-it="Un automobilista che guida in modo irregolare, zigzagando tra le corsie o commettendo gravi infrazioni, sospetto sotto effetto di alcol o droghe.">A motorist driving erratically, swerving between lanes, or committing severe traffic violations under the suspected influence of alcohol or drugs.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Stolen vehicle pursuit</div><div class="callout-desc" data-en="A flagged stolen vehicle is spotted by police, and the driver refuses to pull over, initiating a high-speed pursuit." data-it="Un veicolo rubato segnalato viene avvistato dalla polizia e il conducente rifiuta di fermarsi, innescando un inseguimento ad alta velocita.">A flagged stolen vehicle is spotted by police, and the driver refuses to pull over, initiating a high-speed pursuit.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Illegal street racing</div><div class="callout-desc" data-en="Modified cars racing at high speeds on public roads, endangering pedestrians and oncoming traffic." data-it="Auto modificate che corrono ad alta velocita su strade pubbliche, mettendo in pericolo pedoni e traffico in arrivo.">Modified cars racing at high speeds on public roads, endangering pedestrians and oncoming traffic.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Taxi with aggressive passenger</div><div class="callout-desc" data-en="A cab driver requesting immediate assistance because a passenger is being violent, threatening, or refusing to pay." data-it="Un tassista che richiede assistenza immediata perche un passeggero e violento, minaccioso o rifiuta di pagare.">A cab driver requesting immediate assistance because a passenger is being violent, threatening, or refusing to pay.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Suspicious vehicle stopped roadside</div><div class="callout-desc" data-en="A vehicle parked in a dark, isolated area with its headlights off, with occupants seemingly hiding or doing something illicit." data-it="Un veicolo parcheggiato in un'area buia e isolata con i fari spenti, con occupanti che sembrano nascondersi o fare qualcosa di illecito.">A vehicle parked in a dark, isolated area with its headlights off, with occupants seemingly hiding or doing something illicit.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Person wandering on the highway</div><div class="callout-desc" data-en="A pedestrian walking dangerously along the shoulder or attempting to cross a high-speed freeway." data-it="Un pedone che cammina pericolosamente lungo la spallina o tenta di attraversare un'autostrada ad alta velocita.">A pedestrian walking dangerously along the shoulder or attempting to cross a high-speed freeway.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚗</div><div class="callout-content"><div class="callout-name">Animal on the road</div><div class="callout-desc" data-en="A large animal (like a deer or a stray dog) wandering onto the roadway, creating a severe crash hazard." data-it="Un animale di grandi dimensioni (come un cervo o un cane randagio) che si avventa sulla strada, creando un grave rischio di incidente.">A large animal (like a deer or a stray dog) wandering onto the roadway, creating a severe crash hazard.</div></div></div>
+        <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">HighSpeedPursuit <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="Dynamic pursuit with multiple routes, roadblocks, and suspect behavior variations." data-it="Inseguimento dinamico con percorsi multipli, posti di blocco e variazioni di comportamento del sospetto.">Dynamic pursuit with multiple routes, roadblocks, and suspect behavior variations.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>💰 <span data-en="Property Crimes (Theft & Burglary)" data-it="Reati contro il Patrimonio (Furto e Scasso)">Property Crimes (Theft & Burglary)</span> <span class="count">6</span></h2>
+        <div class="callout"><div class="callout-icon">💰</div><div class="callout-content"><div class="callout-name">Simple Robbery</div><div class="callout-desc" data-en="A theft committed using force, intimidation, or direct threats against a victim (like a purse snatching), but without firearms." data-it="Un furto commesso con violenza, intimidazione o minacce dirette contro una vittima (come uno scippo), ma senza armi da fuoco.">A theft committed using force, intimidation, or direct threats against a victim (like a purse snatching), but without firearms.</div></div></div>
+        <div class="callout"><div class="callout-icon">💰</div><div class="callout-content"><div class="callout-name">Car theft in progress</div><div class="callout-desc" data-en="A suspect caught in the act of breaking into a vehicle, smashing windows, or hotwiring it to drive away." data-it="Un sospetto sorpreso mentre forza un veicolo, rompe i vetri o tenta di metterlo in moto per scappare.">A suspect caught in the act of breaking into a vehicle, smashing windows, or hotwiring it to drive away.</div></div></div>
+        <div class="callout"><div class="callout-icon">💰</div><div class="callout-content"><div class="callout-name">Residential Burglary</div><div class="callout-desc" data-en="A break-in occurring (or just occurred) at a private house, apartment, or residential estate." data-it="Una effrazione in corso (o appena avvenuta) in una casa privata, appartamento o complesso residenziale.">A break-in occurring (or just occurred) at a private house, apartment, or residential estate.</div></div></div>
+        <div class="callout"><div class="callout-icon">💰</div><div class="callout-content"><div class="callout-name">Commercial Burglary</div><div class="callout-desc" data-en="A forced entry or smash-and-grab at a store, office, or shopping mall, typically during closing hours." data-it="Una effrazione o spaccata in un negozio, ufficio o centro commerciale, tipicamente durante gli orari di chiusura.">A forced entry or smash-and-grab at a store, office, or shopping mall, typically during closing hours.</div></div></div>
+        <div class="callout"><div class="callout-icon">💰</div><div class="callout-content"><div class="callout-name">Garage Burglary</div><div class="callout-desc" data-en="A break-in targeting a garage, carport, or storage shed to steal tools, bicycles, or motorcycles." data-it="Una effrazione mirata a un garage, tettoia o rimessa per rubare attrezzi, biciclette o motociclette.">A break-in targeting a garage, carport, or storage shed to steal tools, bicycles, or motorcycles.</div></div></div>
+        <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">BankRobbery <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="Armed robbery of a financial institution with hostage potential and multi-phase getaway." data-it="Rapina armata a un istituto finanziario con potenziale ostaggio e fuga multi-fase.">Armed robbery of a financial institution with hostage potential and multi-phase getaway.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>🔴 <span data-en="Severe & Violent Crimes" data-it="Reati Gravi e Violenti">Severe & Violent Crimes</span> <span class="count">9</span></h2>
+        <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Armed Person</div><div class="callout-desc" data-en="Reports of an individual openly carrying or brandishing a firearm, knife, or other dangerous weapon in a public space, causing panic." data-it="Segnalazioni di un individuo che trasporta o sventola apertamente un'arma da fuoco, coltello o altra arma pericolosa in uno spazio pubblico, causando panico.">Reports of an individual openly carrying or brandishing a firearm, knife, or other dangerous weapon in a public space, causing panic.</div></div></div>
+        <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Wanted Person Spotted</div><div class="callout-desc" data-en="An officer or a citizen recognizes a suspect on the street who has an active arrest warrant." data-it="Un agente o un cittadino riconosce un sospetto per strada con un mandato di arresto attivo.">An officer or a citizen recognizes a suspect on the street who has an active arrest warrant.</div></div></div>
+        <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Stabbing</div><div class="callout-desc" data-en="A violent assault where a victim has been injured or actively threatened with a knife or sharp object." data-it="Un aggressione violenta in cui una vittima e stata ferita o minacciata attivamente con un coltello o oggetto appuntito.">A violent assault where a victim has been injured or actively threatened with a knife or sharp object.</div></div></div>
+        <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Assault</div><div class="callout-desc" data-en="A physical attack on an innocent person, with injuries being inflicted in real-time or just before police arrival." data-it="Un attacco fisico su una persona innocente, con ferite inferte in tempo reale o poco prima dell'arrivo della polizia.">A physical attack on an innocent person, with injuries being inflicted in real-time or just before police arrival.</div></div></div>
+        <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Domestic violence</div><div class="callout-desc" data-en="A violent family dispute inside a residence involving active physical altercations or severe threats between partners or relatives." data-it="Una violenta disputa familiare all'interno di una residenza con alterchi fisici attivi o gravi minacce tra partner o parenti.">A violent family dispute inside a residence involving active physical altercations or severe threats between partners or relatives.</div></div></div>
+        <div class="callout"><div class="callout-icon">🔴</div><div class="callout-content"><div class="callout-name">Armed wanted suspect</div><div class="callout-desc" data-en="Locating a dangerous, wanted fugitive who is confirmed to be armed and likely to shoot to avoid capture." data-it="Ricerca di un pericoloso fuggitivo ricercato, confermato armato e probabilmente intenzionato a sparare per evitare la cattura.">Locating a dangerous, wanted fugitive who is confirmed to be armed and likely to shoot to avoid capture.</div></div></div>
+        <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">ActiveShooter <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="Multiple armed suspects in a public location with panicked civilians and ongoing casualties." data-it="Piu sospetti armati in una localita pubblica con civili in panico e vittime in corso.">Multiple armed suspects in a public location with panicked civilians and ongoing casualties.</div></div></div>
+        <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">Officer Down <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="An injured NPC officer is found on the ground. EMS is automatically dispatched while the suspect attempts to flee." data-it="Un agente NPC ferito viene trovato a terra. EMS viene automaticamente inviato mentre il sospetto tenta di fuggire.">An injured NPC officer is found on the ground. EMS is automatically dispatched while the suspect attempts to flee.</div></div></div>
+        <div class="callout new"><div class="callout-icon">⭐</div><div class="callout-content"><div class="callout-name">HostageSituation <span class="badge-new">NEW</span></div><div class="callout-desc" data-en="Hostage negotiation through dialogue with escalating demands and tactical options." data-it="Negoziazione ostaggi attraverso dialogo con richieste in escalation e opzioni tattiche.">Hostage negotiation through dialogue with escalating demands and tactical options.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>💊 <span data-en="Narcotics & Drugs" data-it="Stupefacenti e Droga">Narcotics & Drugs</span> <span class="count">2</span></h2>
+        <div class="callout"><div class="callout-icon">💊</div><div class="callout-content"><div class="callout-name">Drug dealing</div><div class="callout-desc" data-en="Active, ongoing sale of illegal substances in a specific area, such as a local park, alleyway, or street corner." data-it="Vendita attiva e in corso di sostanze illegali in un'area specifica, come un parco, un vicolo o un angolo di strada.">Active, ongoing sale of illegal substances in a specific area, such as a local park, alleyway, or street corner.</div></div></div>
+        <div class="callout"><div class="callout-icon">💊</div><div class="callout-content"><div class="callout-name">Suspicious drug exchange</div><div class="callout-desc" data-en="Two individuals caught performing a quick hand-to-hand exchange of cash for small packages before quickly walking away." data-it="Due individui sorpresi mentre effettuano un rapido scambio mano a mano di contanti per piccoli pacchetti prima di allontanarsi rapidamente.">Two individuals caught performing a quick hand-to-hand exchange of cash for small packages before quickly walking away.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>🏥 <span data-en="Medical & Psychiatric Emergencies" data-it="Emergenze Mediche e Psichiatriche">Medical & Psychiatric Emergencies</span> <span class="count">3</span></h2>
+        <div class="callout"><div class="callout-icon">🏥</div><div class="callout-content"><div class="callout-name">Missing person</div><div class="callout-desc" data-en="A search operation for an individual (often a minor or an elderly person with medical conditions) who has disappeared and is at risk." data-it="Un'operazione di ricerca per un individuo (spesso un minore o un anziano con condizioni mediche) scomparso e a rischio.">A search operation for an individual (often a minor or an elderly person with medical conditions) who has disappeared and is at risk.</div></div></div>
+        <div class="callout"><div class="callout-icon">🏥</div><div class="callout-content"><div class="callout-name">Person experiencing a psychotic episode</div><div class="callout-desc" data-en="An individual undergoing a severe mental health crisis, exhibiting delusions, hallucinations, and unpredictable behavior." data-it="Un individuo in una grave crisi di salute mentale, che manifesta deliri, allucinazioni e comportamenti imprevedibili.">An individual undergoing a severe mental health crisis, exhibiting delusions, hallucinations, and unpredictable behavior.</div></div></div>
+        <div class="callout"><div class="callout-icon">🏥</div><div class="callout-content"><div class="callout-name">Attempted suicide</div><div class="callout-desc" data-en="A person threatening to take their own life (e.g., standing on a bridge or rooftop ledge), requiring immediate crisis negotiation." data-it="Una persona che minaccia di togliersi la vita (es. in piedi su un ponte o sul cornicione di un tetto), che richiede una immediata negoziazione di crisi.">A person threatening to take their own life (e.g., standing on a bridge or rooftop ledge), requiring immediate crisis negotiation.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>🚨 <span data-en="Major Accidents & Disasters" data-it="Gravi Incidenti e Disastri">Major Accidents & Disasters</span> <span class="count">7</span></h2>
+        <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Serious traffic accident</div><div class="callout-desc" data-en="A high-speed crash resulting in heavily damaged vehicles, victims trapped inside wreckage, and critical medical injuries." data-it="Un incidente ad alta velocita con veicoli gravemente danneggiati, vittime intrappolate nei rottami e ferite mediche critiche.">A high-speed crash resulting in heavily damaged vehicles, victims trapped inside wreckage, and critical medical injuries.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Motorcycle accident</div><div class="callout-desc" data-en="A severe crash involving a motorcyclist who has been thrown from their bike, usually resulting in major trauma." data-it="Un grave incidente che coinvolge un motociclista scagliato dalla moto, solitamente con traumi maggiori.">A severe crash involving a motorcyclist who has been thrown from their bike, usually resulting in major trauma.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Overturned truck</div><div class="callout-desc" data-en="A semi-truck or heavy commercial vehicle that has flipped over, blocking multiple lanes and potentially spilling cargo." data-it="Un camion o veicolo commerciale pesante che si e capovolto, bloccando piu corsie e potenzialmente versando il carico.">A semi-truck or heavy commercial vehicle that has flipped over, blocking multiple lanes and potentially spilling cargo.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Train accident</div><div class="callout-desc" data-en="A train derailment or a violent collision between a locomotive and a vehicle stuck at a railroad crossing." data-it="Un deragliamento ferroviario o una violenta collisione tra una locomotiva e un veicolo bloccato a un passaggio a livello.">A train derailment or a violent collision between a locomotive and a vehicle stuck at a railroad crossing.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Small plane crash</div><div class="callout-desc" data-en="A light aircraft or private plane that has gone down in an urban area, field, or forest." data-it="Un aereo leggero o privato caduto in un'area urbana, campo o foresta.">A light aircraft or private plane that has gone down in an urban area, field, or forest.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Car in the river</div><div class="callout-desc" data-en="A vehicle that has veered off the road and plunged into a body of water, leaving occupants at risk of drowning." data-it="Un veicolo che ha deviato dalla strada ed e finito in un corpo d'acqua, lasciando gli occupanti a rischio di annegamento.">A vehicle that has veered off the road and plunged into a body of water, leaving occupants at risk of drowning.</div></div></div>
+        <div class="callout"><div class="callout-icon">🚨</div><div class="callout-content"><div class="callout-name">Fuel leak</div><div class="callout-desc" data-en="A massive spill of gasoline, diesel, or hazardous materials from a tanker or ruptured fuel tank, posing an extreme fire hazard." data-it="Una massiccia fuoriuscita di benzina, gasolio o materiali pericolosi da un autobotte o serbatoio rotto, con estremo rischio di incendio.">A massive spill of gasoline, diesel, or hazardous materials from a tanker or ruptured fuel tank, posing an extreme fire hazard.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>💣 <span data-en="Explosives & Arson Threats" data-it="Minacce da Esplosivi e Incendi">Explosives & Arson Threats</span> <span class="count">6</span></h2>
+        <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Bomb threat</div><div class="callout-desc" data-en="An anonymous tip or call claiming an explosive device has been planted inside a public building, school, or landmark." data-it="Una segnalazione anonima che sostiene che un ordigno esplosivo sia stato piazzato all'interno di un edificio pubblico, scuola o monumento.">An anonymous tip or call claiming an explosive device has been planted inside a public building, school, or landmark.</div></div></div>
+        <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Arson</div><div class="callout-desc" data-en="A suspect caught intentionally setting fire to a trash dumpster, vehicle, or structure." data-it="Un sospetto sorpreso mentre apposta incendia un cassonetto, veicolo o struttura.">A suspect caught intentionally setting fire to a trash dumpster, vehicle, or structure.</div></div></div>
+        <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">False fire alarm</div><div class="callout-desc" data-en="The malicious or accidental pulling of a fire alarm lever in a public building when no actual emergency exists." data-it="L'attivazione dolosa o accidentale di una leva antincendio in un edificio pubblico quando non esiste un'emergenza reale.">The malicious or accidental pulling of a fire alarm lever in a public building when no actual emergency exists.</div></div></div>
+        <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Suspicious package</div><div class="callout-desc" data-en="An unattended box, backpack, or sealed container left in a crowded area (like a transit station) that could be an IED." data-it="Una scatola, zaino o contenitore sigillato incustodito lasciato in un'area affollata (come una stazione) che potrebbe essere un IED.">An unattended box, backpack, or sealed container left in a crowded area (like a transit station) that could be an IED.</div></div></div>
+        <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Abandoned briefcase</div><div class="callout-desc" data-en="A stray briefcase left behind on a bench or post office counter, treated with extreme caution due to explosive risks." data-it="Una valigetta abbandonata su una panchina o bancone delle poste, trattata con estrema cautela per rischio esplosivo.">A stray briefcase left behind on a bench or post office counter, treated with extreme caution due to explosive risks.</div></div></div>
+        <div class="callout"><div class="callout-icon">💣</div><div class="callout-content"><div class="callout-name">Reported explosion</div><div class="callout-desc" data-en="A loud blast followed by smoke reported by multiple citizens, requiring immediate dispatch to investigate casualties and damage." data-it="Un forte boato seguito da fumo segnalato da piu cittadini, che richiede un immediato invio per indagare su vittime e danni.">A loud blast followed by smoke reported by multiple citizens, requiring immediate dispatch to investigate casualties and damage.</div></div></div>
+    </div>
+
+    <div class="category">
+        <h2>🐕 <span data-en="Animals & Backup" data-it="Animali e Rinforzi">Animals & Backup</span> <span class="count">2</span></h2>
+        <div class="callout"><div class="callout-icon">🐕</div><div class="callout-content"><div class="callout-name">Callout Helpers</div><div class="callout-desc" data-en="A call for immediate backup from fellow officers who are outnumbered, facing resistance, or handling a volatile scene." data-it="Richiesta di rinforzi immediati da colleghi in inferiorita numerica, che affrontano resistenza o gestiscono una scena volatile.">A call for immediate backup from fellow officers who are outnumbered, facing resistance, or handling a volatile scene.</div></div></div>
+        <div class="callout"><div class="callout-icon">🐕</div><div class="callout-content"><div class="callout-name">Aggressive dog</div><div class="callout-desc" data-en="A large, loose dog without a leash or muzzle that is growling at, cornering, or actively attacking pedestrians." data-it="Un grosso cane sciolto senza guinzaglio o museruola che ringhia, intrappola o attacca attivamente i pedoni.">A large, loose dog without a leash or muzzle that is growling at, cornering, or actively attacking pedestrians.</div></div></div>
+    </div>
+</section>
+
+<!-- CONFIG SECTION -->
+<section id="config" class="section config-section">
+    <div class="card">
+        <h2 data-en="Configuration Guide" data-it="Guida alla Configurazione">Configuration Guide</h2>
+        <p data-en="Customize your callout experience through the INI configuration file." data-it="Personalizza la tua esperienza callout attraverso il file di configurazione INI.">Customize your callout experience through the INI configuration file.</p>
+    </div>
+
+    <div class="card">
+        <h3 data-en="File Location" data-it="Percorso del File">File Location</h3>
+        <div class="code-block">Plugins/LSPDFR/CalloutPack/CalloutPack.ini</div>
+    </div>
+
+    <div class="card">
+        <h3 data-en="General Settings" data-it="Impostazioni Generali">General Settings</h3>
+        <table class="config-table">
+            <thead>
+                <tr>
+                    <th data-en="Setting" data-it="Impostazione">Setting</th>
+                    <th data-en="Default" data-it="Default">Default</th>
+                    <th data-en="Description" data-it="Descrizione">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>Language</code></td><td><code>English</code></td><td data-en="Game language: English or Italian" data-it="Lingua di gioco: English o Italian">Game language: English or Italian</td></tr>
+                <tr><td><code>MinSpawnDistance</code></td><td><code>100</code></td><td data-en="Minimum spawn distance in meters" data-it="Distanza minima di spawn in metri">Minimum spawn distance in meters</td></tr>
+                <tr><td><code>MaxSpawnDistance</code></td><td><code>2000</code></td><td data-en="Maximum spawn distance in meters" data-it="Distanza massima di spawn in metri">Maximum spawn distance in meters</td></tr>
+                <tr><td><code>CalloutProbability</code></td><td><code>100</code></td><td data-en="Global callout spawn chance (0-100%)" data-it="Probabilita globale di spawn callout (0-100%)">Global callout spawn chance (0-100%)</td></tr>
+                <tr><td><code>EnableBackup</code></td><td><code>true</code></td><td data-en="Automatically request backup on dangerous callouts" data-it="Richiedi automaticamente rinforzi su callout pericolosi">Automatically request backup on dangerous callouts</td></tr>
+                <tr><td><code>EnableEMS</code></td><td><code>true</code></td><td data-en="Automatically dispatch EMS on injury callouts" data-it="Invia automaticamente EMS su callout con feriti">Automatically dispatch EMS on injury callouts</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3 data-en="Category Toggles" data-it="Attivazione per Categoria">Category Toggles</h3>
+        <table class="config-table">
+            <thead>
+                <tr>
+                    <th data-en="Setting" data-it="Impostazione">Setting</th>
+                    <th data-en="Default" data-it="Default">Default</th>
+                    <th data-en="Description" data-it="Descrizione">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>EnablePublicOrder</code></td><td><code>true</code></td><td data-en="Enable Public Order & Common Reports callouts" data-it="Attiva callout Ordine Pubblico e Rapporti Comuni">Enable Public Order & Common Reports callouts</td></tr>
+                <tr><td><code>EnableTraffic</code></td><td><code>true</code></td><td data-en="Enable Traffic & Road Safety callouts" data-it="Attiva callout Traffico e Sicurezza Stradale">Enable Traffic & Road Safety callouts</td></tr>
+                <tr><td><code>EnablePropertyCrimes</code></td><td><code>true</code></td><td data-en="Enable Property Crimes callouts" data-it="Attiva callout Reati contro il Patrimonio">Enable Property Crimes callouts</td></tr>
+                <tr><td><code>EnableViolentCrimes</code></td><td><code>true</code></td><td data-en="Enable Severe & Violent Crimes callouts" data-it="Attiva callout Reati Gravi e Violenti">Enable Severe & Violent Crimes callouts</td></tr>
+                <tr><td><code>EnableNarcotics</code></td><td><code>true</code></td><td data-en="Enable Narcotics & Drugs callouts" data-it="Attiva callout Stupefacenti e Droga">Enable Narcotics & Drugs callouts</td></tr>
+                <tr><td><code>EnableMedical</code></td><td><code>true</code></td><td data-en="Enable Medical & Psychiatric Emergencies callouts" data-it="Attiva callout Emergenze Mediche e Psichiatriche">Enable Medical & Psychiatric Emergencies callouts</td></tr>
+                <tr><td><code>EnableAccidents</code></td><td><code>true</code></td><td data-en="Enable Major Accidents & Disasters callouts" data-it="Attiva callout Gravi Incidenti e Disastri">Enable Major Accidents & Disasters callouts</td></tr>
+                <tr><td><code>EnableExplosives</code></td><td><code>true</code></td><td data-en="Enable Explosives & Arson Threats callouts" data-it="Attiva callout Minacce da Esplosivi e Incendi">Enable Explosives & Arson Threats callouts</td></tr>
+                <tr><td><code>EnableAnimals</code></td><td><code>true</code></td><td data-en="Enable Animals & Backup callouts" data-it="Attiva callout Animali e Rinforzi">Enable Animals & Backup callouts</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h3 data-en="Example INI File" data-it="Esempio di File INI">Example INI File</h3>
+        <div class="code-block">; Callout Pack Configuration
+; Restart LSPDFR after changes
+
+[General]
+Language=English
+MinSpawnDistance=100
+MaxSpawnDistance=2000
+CalloutProbability=100
+EnableBackup=true
+EnableEMS=true
+
+[Categories]
+EnablePublicOrder=true
+EnableTraffic=true
+EnablePropertyCrimes=true
+EnableViolentCrimes=true
+EnableNarcotics=true
+EnableMedical=true
+EnableAccidents=true
+EnableExplosives=true
+EnableAnimals=true</div>
+    </div>
+</section>
+
+<!-- CHANGELOG SECTION -->
+<section id="changelog" class="section">
+    <div class="version latest">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.0.8</span>
+            <span class="badge-latest">LATEST</span>
+        </div>
+        <div class="changelog-section-title">🆕 <span data-en="New Callouts" data-it="Nuovi Callout">New Callouts</span></div>
+        <div class="callout-grid">
+            <span class="callout-tag">ResidentialBurglary</span>
+            <span class="callout-tag">CommercialBurglary</span>
+            <span class="callout-tag">GarageBurglary</span>
+        </div>
+        <div class="changelog-section-title">🔧 <span data-en="Bug Fixes & Improvements" data-it="Bug Fix e Miglioramenti">Bug Fixes & Improvements</span></div>
+        <ul class="fix-list">
+            <li data-en="Fixed spawning too close or too late" data-it="Corretto spawn troppo vicino o troppo tardi">Fixed spawning too close or too late</li>
+            <li data-en="Fixed pedestrians walking away on their own" data-it="Corretto pedoni che se ne andavano da soli">Fixed pedestrians walking away on their own</li>
+            <li data-en="Fixed civilians/victims behaving like suspects" data-it="Corretto civili/vittime che si comportavano come sospetti">Fixed civilians/victims behaving like suspects</li>
+            <li data-en="Fixed callouts switching to Code 4 immediately upon arrival" data-it="Corretto callout che passavano a Code 4 immediatamente all'arrivo">Fixed callouts switching to Code 4 immediately upon arrival</li>
+            <li data-en="Fixed fake callouts lacking a coherent object or scene" data-it="Corretto callout falsi privi di oggetto o scena coerente">Fixed fake callouts lacking a coherent object or scene</li>
+            <li data-en="Fixed callouts spawning in absurd locations" data-it="Corretto callout che spawnavano in luoghi assurdi">Fixed callouts spawning in absurd locations</li>
+            <li data-en="Fixed missing objects for package/briefcase/arson/spill/explosion incidents" data-it="Corretto oggetti mancanti per incidenti pacco/valigetta/incendio/fuoriuscita/esplosione">Fixed missing objects for package/briefcase/arson/spill/explosion incidents</li>
+            <li data-en="Fixed generic scenes that were too repetitive" data-it="Corretto scene generiche troppo ripetitive">Fixed generic scenes that were too repetitive</li>
+            <li data-en="Changed version numbering from 0.0.8 to 0.0.0.8" data-it="Cambiata numerazione versione da 0.0.8 a 0.0.0.8">Changed version numbering from 0.0.8 to 0.0.0.8</li>
+        </ul>
+    </div>
+
+    <div class="version">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.0.7</span>
+        </div>
+        <div class="changelog-section-title">🔧 <span data-en="Changes" data-it="Modifiche">Changes</span></div>
+        <ul class="fix-list">
+            <li data-en="Changed the package name" data-it="Cambiato il nome del pacchetto">Changed the package name</li>
+        </ul>
+    </div>
+
+    <div class="version">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.0.6</span>
+        </div>
+        <div class="changelog-section-title">🆕 <span data-en="What's New" data-it="Novita">What's New</span></div>
+        <ul class="feature-list">
+            <li data-en="Traffic & Pursuits: New calls for drunk driving, stolen cars, illegal street racing, and suspicious vehicles" data-it="Traffico e Inseguimenti: Nuove chiamate per guida in stato di ebbrezza, auto rubate, corse illegali e veicoli sospetti">Traffic & Pursuits: New calls for drunk driving, stolen cars, illegal street racing, and suspicious vehicles</li>
+            <li data-en="Crimes & Violence: Responses to assaults, stabbings, car thefts, drug dealing, and bomb/fire alarms" data-it="Crimini e Violenza: Risposte ad aggressioni, accoltellamenti, furti d'auto, spaccio e allarmi bomba/incendio">Crimes & Violence: Responses to assaults, stabbings, car thefts, drug dealing, and bomb/fire alarms</li>
+            <li data-en="Social Emergencies & People: Handling missing persons, psychiatric incidents, suicide attempts, domestic violence, and armed subjects" data-it="Emergenze Sociali e Persone: Gestione persone scomparse, incidenti psichiatrici, tentativi di suicidio, violenza domestica e soggetti armati">Social Emergencies & People: Handling missing persons, psychiatric incidents, suicide attempts, domestic violence, and armed subjects</li>
+            <li data-en="Accidents & Disasters: New scenarios for multi-vehicle pile-ups, train/plane crashes, cars in water, and fuel spills" data-it="Incidenti e Disastri: Nuovi scenari per tamponamenti multipli, incidenti treno/aereo, auto in acqua e fuoriuscite di carburante">Accidents & Disasters: New scenarios for multi-vehicle pile-ups, train/plane crashes, cars in water, and fuel spills</li>
+            <li data-en="Public Order: Bar fights, out-of-control parties, violent fan groups, and protests" data-it="Ordine Pubblico: Risse in bar, feste fuori controllo, gruppi di tifosi violenti e proteste">Public Order: Bar fights, out-of-control parties, violent fan groups, and protests</li>
+            <li data-en="Random Events & Optimizations: Dangerous animals on the road, suspicious packages, explosions, and general bug fixes" data-it="Eventi Casuali e Ottimizzazioni: Animali pericolosi sulla strada, pacchi sospetti, esplosioni e bug fix generali">Random Events & Optimizations: Dangerous animals on the road, suspicious packages, explosions, and general bug fixes</li>
+        </ul>
+    </div>
+
+    <div class="version">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.0.5</span>
+        </div>
+        <div class="changelog-section-title">🔧 <span data-en="Changes" data-it="Modifiche">Changes</span></div>
+        <ul class="fix-list">
+            <li data-en="Adjusted the call range to between 100m and 2km" data-it="Regolato il range di chiamata tra 100m e 2km">Adjusted the call range to between 100m and 2km</li>
+        </ul>
+    </div>
+
+    <div class="version">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.0.4</span>
+        </div>
+        <div class="changelog-section-title">🆕 <span data-en="What's New" data-it="Novita">What's New</span></div>
+        <ul class="feature-list">
+            <li data-en="Released support for the English language alongside Italian" data-it="Rilasciato supporto per la lingua inglese insieme all'italiano">Released support for the English language alongside Italian</li>
+        </ul>
+    </div>
+
+    <div class="version">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.0.3</span>
+        </div>
+        <div class="changelog-section-title">🆕 <span data-en="What's New" data-it="Novita">What's New</span></div>
+        <ul class="feature-list">
+            <li data-en="Added new callouts" data-it="Aggiunti nuovi callout">Added new callouts</li>
+            <li data-en="Fixed some bugs" data-it="Corretti alcuni bug">Fixed some bugs</li>
+        </ul>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p> 2026 - Callout Pack for LSPDFR | <a href="https://discord.gg/...">Discord</a> | <a href="https://github.com/...">GitHub</a></p>
+</footer>
+
+<script>
+// ===== SECTION NAVIGATION =====
+function showSection(sectionId, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    window.location.hash = sectionId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== LANGUAGE SWITCHER =====
+let currentLang = 'en';
+
+function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    document.querySelectorAll('[data-en][data-it]').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if (text) {
+            if (el.children.length === 0) {
+                el.textContent = text;
+            } else {
+                const firstText = el.childNodes[0];
+                if (firstText && firstText.nodeType === Node.TEXT_NODE) {
+                    firstText.textContent = text + ' ';
+                }
+            }
+        }
+    });
+    localStorage.setItem('calloutpack-lang', lang);
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', function() {
+    const savedLang = localStorage.getItem('calloutpack-lang');
+    if (savedLang && savedLang !== 'en') {
+        setLang(savedLang);
+    }
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(hash).classList.add('active');
+        document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+            const sections = ['home', 'callouts', 'config', 'changelog'];
+            btn.classList.toggle('active', sections[i] === hash);
+        });
+    }
+});
+</script>
+
 </body>
 </html>
