@@ -615,6 +615,7 @@
             .nav-btn { padding: 8px 14px; font-size: 0.9rem; }
             main { padding: 1rem; }
             .category, .version, .card { padding: 1rem; }
+            section[id] { padding-top: 160px !important; }
         }
     
         /* ===== DOWNLOAD SECTION ===== */
@@ -727,11 +728,10 @@
     </nav>
 </header>
 
-<div style="height: 70px;"></div>
 <main>
 
 <!-- HOME SECTION -->
-<section id="home" class="section active">
+<section id="home" class="section active" style="padding-top: 140px;">
     <div class="hero">
         <h2 data-en="Take Your Patrolling to the Next Level" data-it="Porta il Tuo Pattugliamento al Livello Successivo">Take Your Patrolling to the Next Level</h2>
         <p data-en="58+ unique callouts, highly configurable, with dynamic scenarios and multiple endings." data-it="58+ callout unici, altamente configurabili, con scenari dinamici e finali multipli.">58+ unique callouts, highly configurable, with dynamic scenarios and multiple endings.</p>
@@ -805,7 +805,7 @@
 </section>
 
 <!-- CALLOUTS SECTION -->
-<section id="callouts" class="section">
+<section id="callouts" class="section" style="padding-top: 140px;">
     <div class="summary-box">
         <h3 data-en="Total Available Callouts" data-it="Totale Chiamate Disponibili">Total Available Callouts</h3>
         <div class="total">58</div>
@@ -907,7 +907,7 @@
 </section>
 
 <!-- DOWNLOAD SECTION -->
-<section id="download" class="section">
+<section id="download" class="section" style="padding-top: 140px;">
     <div class="card reveal">
         <h2 data-en="Download More Callout" data-it="Scarica More Callout">Download More Callout</h2>
         <p data-en="Choose between the stable release (recommended) or the latest beta for testing new features." data-it="Scegli tra la versione stabile (consigliata) o l ultima beta per testare nuove funzionalita.">Choose between the stable release (recommended) or the latest beta for testing new features.</p>
@@ -977,7 +977,7 @@
 </section>
 
 <!-- CONFIG SECTION -->
-<section id="config" class="section config-section">
+<section id="config" class="section config-section" style="padding-top: 140px;">
     <div class="card reveal">
         <h2 data-en="Configuration Guide" data-it="Guida alla Configurazione">Configuration Guide</h2>
         <p data-en="Customize your callout experience through the INI configuration file." data-it="Personalizza la tua esperienza callout attraverso il file di configurazione .INI">Customize your callout experience through the INI configuration file.</p>
@@ -1063,7 +1063,7 @@ EnableAnimals=true</div>
 </section>
 
 <!-- FAQ SECTION -->
-<section id="faq" class="section">
+<section id="faq" class="section" style="padding-top: 140px;">
     <div class="card reveal">
         <h2 data-en="Frequently Asked Questions" data-it="Domande Frequenti">Frequently Asked Questions</h2>
         <p data-en="Find answers to the most common questions about More Callout." data-it="Trova risposte alle domande più comuni su More Callout.">Find answers to the most common questions about More Callout.</p>
@@ -1141,7 +1141,7 @@ EnableAnimals=true</div>
 </section>
 
 <!-- CHANGELOG SECTION -->
-<section id="changelog" class="section">
+<section id="changelog" class="section" style="padding-top: 140px;">
     <div class="version latest">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.9 Beta</span>
@@ -1267,7 +1267,7 @@ function showSection(sectionId, btn) {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     window.location.hash = sectionId;
-    // Scroll in cima considerando l'header fixed (180px offset)
+    // Scroll con offset per l'header fixed
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
