@@ -16,6 +16,8 @@
             --text: #e0e0e0;
             --text-muted: #a0a0a0;
             --border: #2a2a3e;
+            --beta-warning: #f59e0b;
+            --stable-green: #22c55e;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -372,10 +374,97 @@
             main { padding: 1rem; }
             .category, .version, .card { padding: 1rem; }
         }
-    </style>
+    
+        /* ===== DOWNLOAD SECTION ===== */
+        .download-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .download-tab {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .download-tab:hover { color: var(--accent); }
+        .download-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .download-panel { display: none; }
+        .download-panel.active { display: block; animation: fadeIn 0.4s ease; }
+        .beta-banner {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .beta-banner-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .beta-banner-text { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
+        .beta-banner-text strong { color: #f59e0b; }
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .download-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .download-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+        .download-card.stable { border-left: 4px solid var(--stable-green); }
+        .download-card.beta { border-left: 4px solid var(--beta-warning); }
+        .download-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+        .download-version { font-size: 1.2rem; font-weight: 700; color: #fff; }
+        .download-badge {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            padding: 4px 12px; border-radius: 20px; letter-spacing: 0.5px;
+        }
+        .download-badge.stable { background: rgba(34, 197, 94, 0.15); color: var(--stable-green); }
+        .download-badge.beta { background: rgba(245, 158, 11, 0.15); color: var(--beta-warning); }
+        .download-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .file-list { list-style: none; padding: 0; margin: 0; }
+        .file-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.6rem 0; border-bottom: 1px solid var(--border);
+            font-size: 0.9rem; color: var(--text-muted);
+        }
+        .file-item:last-child { border-bottom: none; }
+        .file-name { display: flex; align-items: center; gap: 10px; }
+        .file-icon { font-size: 1.1rem; }
+        .file-size { color: var(--text-muted); font-size: 0.8rem; opacity: 0.7; }
+        .btn-download-card {
+            display: inline-flex; align-items: center; gap: 8px;
+            margin-top: 1rem; padding: 10px 20px; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 600; text-decoration: none;
+            border: 2px solid var(--accent); color: var(--accent);
+            background: transparent; transition: all 0.3s; cursor: pointer;
+        }
+        .btn-download-card:hover { background: var(--accent); color: white; }
+        .btn-download-card.stable { border-color: var(--stable-green); color: var(--stable-green); }
+        .btn-download-card.stable:hover { background: var(--stable-green); color: white; }
+        .btn-download-card.beta { border-color: var(--beta-warning); color: var(--beta-warning); }
+        .btn-download-card.beta:hover { background: var(--beta-warning); color: #1a1a2e; }
+</style>
 <base target="_blank">
 <base target="_blank">
-</head>
 <body>
 
 <header>
@@ -388,6 +477,7 @@
     <nav>
         <button class="nav-btn active" onclick="showSection('home', this)" data-en="Home" data-it="Home">Home</button>
         <button class="nav-btn" onclick="showSection('callouts', this)" data-en="Callouts" data-it="Callout">Callouts</button>
+        <button class="nav-btn" onclick="showSection('download', this)" data-en="Download" data-it="Download">Download</button>
         <button class="nav-btn" onclick="showSection('config', this)" data-en="Config" data-it="Configurazione">Config</button>
         <button class="nav-btn" onclick="showSection('changelog', this)" data-en="Changelog" data-it="Changelog">Changelog</button>
     </nav>
@@ -552,6 +642,81 @@
     </div>
 </section>
 
+<!-- DOWNLOAD SECTION -->
+<section id="download" class="section">
+    <div class="card">
+        <h2 data-en="Download MoreCallout" data-it="Scarica MoreCallout">Download MoreCallout</h2>
+        <p data-en="Choose between the stable release (recommended) or the latest beta for testing new features." data-it="Scegli tra la versione stabile (consigliata) o l ultima beta per testare nuove funzionalita.">Choose between the stable release (recommended) or the latest beta for testing new features.</p>
+    </div>
+
+    <div class="download-tabs">
+        <button class="download-tab active" onclick="switchDownloadTab(this, 'stable')" data-en="Stable" data-it="Stabile">Stable</button>
+        <button class="download-tab" onclick="switchDownloadTab(this, 'beta')" data-en="Beta" data-it="Beta">Beta</button>
+    </div>
+
+    <!-- STABLE PANEL -->
+    <div id="download-stable" class="download-panel active">
+        <div class="download-card stable">
+            <div class="download-card-header">
+                <span class="download-version">v0.0.0.8</span>
+                <span class="download-badge stable" data-en="STABLE" data-it="STABILE">STABLE</span>
+            </div>
+            <div class="download-meta" data-en="Released July 2026 - 58 callouts - Full support guaranteed" data-it="Rilasciata Luglio 2026 - 58 callout - Supporto completo garantito">Released July 2026 - 58 callouts - Full support guaranteed</div>
+            <ul class="file-list">
+                <li class="file-item">
+                    <span class="file-name"><span class="file-icon">&#128230;</span> MoreCallout.dll</span>
+                    <span class="file-size">2.4 MB</span>
+                </li>
+                <li class="file-item">
+                    <span class="file-name"><span class="file-icon">&#9881;</span> MoreCallout.ini</span>
+                    <span class="file-size">4 KB</span>
+                </li>
+                <li class="file-item">
+                    <span class="file-name"><span class="file-icon">&#128193;</span> Audio/</span>
+                    <span class="file-size">12 MB</span>
+                </li>
+                <li class="file-item">
+                    <span class="file-name"><span class="file-icon">&#128196;</span> README.md</span>
+                    <span class="file-size">8 KB</span>
+                </li>
+            </ul>
+            <a href="https://www.lcpdfr.com/downloads/gta5mods/scripts/54634-more-callout/" class="btn-download-card stable" data-en="Download Stable" data-it="Scarica Stabile">Download Stable</a>
+        </div>
+    </div>
+
+    <!-- BETA PANEL -->
+    <div id="download-beta" class="download-panel">
+        <div class="beta-banner">
+            <span class="beta-banner-icon">&#9888;</span>
+            <span class="beta-banner-text" data-en="Beta versions may contain bugs, unfinished features, or compatibility issues. Use only for testing - not for production patrols." data-it="Le versioni beta possono contenere bug, funzionalita incomplete o problemi di compatibilita. Usale solo per test - non per pattugliamenti di produzione.">Beta versions may contain bugs, unfinished features, or compatibility issues. Use only for testing - not for production patrols.</span>
+        </div>
+        <div class="download-grid">
+            <div class="download-card beta">
+                <div class="download-card-header">
+                    <span class="download-version">v0.0.0.9-beta.1</span>
+                    <span class="download-badge beta">BETA</span>
+                </div>
+                <div class="download-meta" data-en="Released July 16, 2026 - 58 callouts - Testing phase" data-it="Rilasciata 16 Luglio 2026 - 58 callout - Fase di test">Released July 16, 2026 - 58 callouts - Testing phase</div>
+                <ul class="file-list">
+                    <li class="file-item">
+                        <span class="file-name"><span class="file-icon">&#128230;</span> MoreCallout.dll</span>
+                        <span class="file-size">2.7 MB</span>
+                    </li>
+                    <li class="file-item">
+                        <span class="file-name"><span class="file-icon">&#9881;</span> MoreCallout.ini</span>
+                        <span class="file-size">5 KB</span>
+                    </li>
+                </ul>
+                <a href="#" class="btn-download-card beta" data-en="Download Beta" data-it="Scarica Beta">Download Beta</a>
+            </div>
+            <div class="download-card beta">
+                <div class="download-card-header">
+                    <span class="download-version">v0.0.0.9-beta.2</span>
+                    <span class="download-badge beta">BETA</span>
+            </div>
+            </div>
+</section>
+
 <!-- CONFIG SECTION -->
 <section id="config" class="section config-section">
     <div class="card">
@@ -641,6 +806,35 @@ EnableAnimals=true</div>
 <!-- CHANGELOG SECTION -->
 <section id="changelog" class="section">
     <div class="version latest">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.0.9 Beta</span>
+            <span class="badge-latest">LATEST</span>
+        </div>
+        <div class="changelog-section-title">&#127775; <span data-en="New Features" data-it="Nuove Funzionalita">New Features</span></div>
+        <ul class="feature-list">
+            <li data-en="EasyMode - Less aggressive suspects, basic weapons only" data-it="EasyMode - Sospetti meno aggressivi, solo armi base">EasyMode - Less aggressive suspects, basic weapons only</li>
+            <li data-en="BackupAutoCall - Automatic backup on high-risk callouts" data-it="BackupAutoCall - Backup automatico nei callout ad alto rischio">BackupAutoCall - Automatic backup on high-risk callouts</li>
+            <li data-en="Configurable spawn distance - Min/Max distance for callout spawns" data-it="Distanza spawn configurabile - Distanza Min/Max per gli spawn dei callout">Configurable spawn distance - Min/Max distance for callout spawns</li>
+            <li data-en="Language from INI - Italian/English chosen by user via config file" data-it="Lingua da INI - Italiano/Inglese scelto dall utente via file di configurazione">Language from INI - Italian/English chosen by user via config file</li>
+            <li data-en="Randomized weapons - Different pistols and melee weapons for suspects" data-it="Armi randomizzate - Pistole diverse e armi da mischia diverse per i sospetti">Randomized weapons - Different pistols and melee weapons for suspects</li>
+        </ul>
+        <div class="changelog-section-title">&#128680; <span data-en="New Callouts" data-it="Nuovi Callout">New Callouts</span></div>
+        <div class="callout-grid">
+            <span class="callout-tag">HostageSituation</span>
+            <span class="callout-tag">BankRobbery</span>
+            <span class="callout-tag">ActiveShooter</span>
+            <span class="callout-tag">HighSpeedPursuit</span>
+        </div>
+        <div class="changelog-section-title">&#128172; <span data-en="Callout Details" data-it="Dettagli Callout">Callout Details</span></div>
+        <ul class="feature-list">
+            <li data-en="HostageSituation - Hostage negotiation with dialogue system" data-it="HostageSituation - Negoziazione ostaggi con sistema di dialogo">HostageSituation - Hostage negotiation with dialogue system</li>
+            <li data-en="BankRobbery - Multiple gang members, vehicle getaway phase" data-it="BankRobbery - Gang multipla, fase di fuga in veicolo">BankRobbery - Multiple gang members, vehicle getaway phase</li>
+            <li data-en="ActiveShooter - Multiple shooters, panicked civilians, ongoing threat" data-it="ActiveShooter - Sparatori multipli, civili in panico, minaccia in corso">ActiveShooter - Multiple shooters, panicked civilians, ongoing threat</li>
+            <li data-en="HighSpeedPursuit - Dynamic pursuit with automatic backup dispatch" data-it="HighSpeedPursuit - Inseguimento dinamico con invio automatico backup">HighSpeedPursuit - Dynamic pursuit with automatic backup dispatch</li>
+        </ul>
+    </div>
+
+    <div class="version">
         <div class="version-header">
             <span class="version-number">Version 0.0.0.8</span>
             <span class="badge-latest">LATEST</span>
@@ -761,6 +955,14 @@ function setLang(lang) {
         }
     });
     localStorage.setItem('calloutpack-lang', lang);
+}
+
+// ===== DOWNLOAD TABS =====
+function switchDownloadTab(btn, panel) {
+    document.querySelectorAll('.download-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.download-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('download-' + panel).classList.add('active');
 }
 
 // ===== INIT =====
