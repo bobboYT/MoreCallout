@@ -889,7 +889,7 @@
     <!-- SEARCH BAR -->
     <div class="search-bar-wrapper">
         <span class="search-bar-icon">🔍</span>
-        <input type="text" class="search-bar" id="calloutSearch" placeholder="Search callouts..." data-en-placeholder="Search callouts..." data-it-placeholder="Cerca callout..." oninput="filterCallouts(this.value)">
+        <input type="text" class="search-bar" id="calloutSearch" placeholder="Search callouts..." data-en="Search callouts..." data-it="Cerca callout..." oninput="filterCallouts(this.value)">
         <div class="search-results-count" id="calloutSearchResults"></div>
     </div>
 
@@ -1154,7 +1154,7 @@ EnableAnimals=true</div>
     <!-- SEARCH BAR -->
     <div class="search-bar-wrapper">
         <span class="search-bar-icon">🔍</span>
-        <input type="text" class="search-bar" id="faqSearch" placeholder="Search FAQ..." data-en-placeholder="Search FAQ..." data-it-placeholder="Cerca FAQ..." oninput="filterFaq(this.value)">
+        <input type="text" class="search-bar" id="faqSearch" placeholder="Search FAQ..." data-en="Search FAQ..." data-it="Cerca FAQ..." oninput="filterFaq(this.value)">
         <div class="search-results-count" id="faqSearchResults"></div>
     </div>
 
@@ -1411,7 +1411,9 @@ function setLang(lang) {
     document.querySelectorAll('[data-en][data-it]').forEach(el => {
         const text = el.getAttribute('data-' + lang);
         if (text) {
-            if (el.children.length === 0) {
+            if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
+                el.placeholder = text;
+            } else if (el.children.length === 0) {
                 el.textContent = text;
             } else {
                 const firstText = el.childNodes[0];
@@ -1627,6 +1629,7 @@ function filterCallouts(query) {
             text.setAttribute('data-en', 'No callouts found matching your search.');
             text.setAttribute('data-it', 'Nessun callout trovato per la tua ricerca.');
             text.textContent = currentLang === 'it' ? 'Nessun callout trovato per la tua ricerca.' : 'No callouts found matching your search.';
+            text.classList.add('no-results-text');
             noResultsMsg.appendChild(icon);
             noResultsMsg.appendChild(text);
             document.getElementById('callouts').appendChild(noResultsMsg);
@@ -1693,6 +1696,7 @@ function filterFaq(query) {
             text.setAttribute('data-en', 'No questions found matching your search.');
             text.setAttribute('data-it', 'Nessuna domanda trovata per la tua ricerca.');
             text.textContent = currentLang === 'it' ? 'Nessuna domanda trovata per la tua ricerca.' : 'No questions found matching your search.';
+            text.classList.add('no-results-text');
             noResultsMsg.appendChild(icon);
             noResultsMsg.appendChild(text);
             document.getElementById('faq').appendChild(noResultsMsg);
