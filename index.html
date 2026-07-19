@@ -705,6 +705,76 @@
         .btn-download-card.stable:hover { background: var(--stable-green); color: white; }
         .btn-download-card.beta { border-color: var(--beta-warning); color: var(--beta-warning); }
         .btn-download-card.beta:hover { background: var(--beta-warning); color: #1a1a2e; }
+
+        /* ===== SEARCH BAR ===== */
+        .search-bar-wrapper {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 12px 18px 12px 44px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-card);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .search-bar:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.15);
+        }
+        .search-bar::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+        .search-bar-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
+        .search-bar-wrapper:focus-within .search-bar-icon {
+            color: var(--accent);
+        }
+        .search-results-count {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            padding-left: 4px;
+        }
+        .search-highlight {
+            background: rgba(233, 69, 96, 0.25);
+            border-radius: 3px;
+            padding: 0 2px;
+        }
+        .callout.hidden, .faq-item.hidden {
+            display: none !important;
+        }
+        .category.no-results {
+            display: none !important;
+        }
+        .no-search-results {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+        .no-search-results-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.5;
+        }
+        [data-theme="light"] .search-bar {
+            background: var(--card-light);
+            color: var(--text-light);
+        }
+
 </style>
 <base target="_blank">
 <base target="_blank">
@@ -814,6 +884,13 @@
     <div class="summary-box">
         <h3 data-en="Total Available Callouts" data-it="Totale Chiamate Disponibili">Total Available Callouts</h3>
         <div class="total">58</div>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar-wrapper">
+        <span class="search-bar-icon">🔍</span>
+        <input type="text" class="search-bar" id="calloutSearch" placeholder="Search callouts..." data-en-placeholder="Search callouts..." data-it-placeholder="Cerca callout..." oninput="filterCallouts(this.value)">
+        <div class="search-results-count" id="calloutSearchResults"></div>
     </div>
 
     <div class="category reveal">
@@ -1072,6 +1149,13 @@ EnableAnimals=true</div>
     <div class="card reveal">
         <h2 data-en="Frequently Asked Questions" data-it="Domande Frequenti">Frequently Asked Questions</h2>
         <p data-en="Find answers to the most common questions about More Callout." data-it="Trova risposte alle domande più comuni su More Callout.">Find answers to the most common questions about More Callout.</p>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar-wrapper">
+        <span class="search-bar-icon">🔍</span>
+        <input type="text" class="search-bar" id="faqSearch" placeholder="Search FAQ..." data-en-placeholder="Search FAQ..." data-it-placeholder="Cerca FAQ..." oninput="filterFaq(this.value)">
+        <div class="search-results-count" id="faqSearchResults"></div>
     </div>
 
     <div class="faq-item reveal">
@@ -1471,6 +1555,162 @@ document.addEventListener('DOMContentLoaded', function() {
     // Scroll reveal
     initScrollReveal();
 });
+
+// ===== SEARCH FUNCTIONS =====
+function filterCallouts(query) {
+    query = query.toLowerCase().trim();
+    const categories = document.querySelectorAll('#callouts .category');
+    const resultsEl = document.getElementById('calloutSearchResults');
+    let totalVisible = 0;
+    let totalCallouts = 0;
+
+    categories.forEach(function(category) {
+        const callouts = category.querySelectorAll('.callout');
+        let categoryVisible = 0;
+
+        callouts.forEach(function(callout) {
+            totalCallouts++;
+            const nameEl = callout.querySelector('.callout-name');
+            const descEl = callout.querySelector('.callout-desc');
+            const nameText = nameEl ? nameEl.textContent.toLowerCase() : '';
+            const descText = descEl ? descEl.textContent.toLowerCase() : '';
+
+            // Remove previous highlights
+            if (nameEl) nameEl.innerHTML = nameEl.textContent;
+            if (descEl) descEl.innerHTML = descEl.textContent;
+
+            if (query === '' || nameText.includes(query) || descText.includes(query)) {
+                callout.classList.remove('hidden');
+                categoryVisible++;
+                totalVisible++;
+
+                // Highlight matches
+                if (query !== '') {
+                    highlightText(nameEl, query);
+                    highlightText(descEl, query);
+                }
+            } else {
+                callout.classList.add('hidden');
+            }
+        });
+
+        if (categoryVisible === 0 && query !== '') {
+            category.classList.add('no-results');
+        } else {
+            category.classList.remove('no-results');
+        }
+    });
+
+    // Update results count
+    if (query === '') {
+        resultsEl.textContent = '';
+    } else {
+        const lang = currentLang;
+        if (lang === 'it') {
+            resultsEl.textContent = totalVisible + ' risultati su ' + totalCallouts + ' callout';
+        } else {
+            resultsEl.textContent = totalVisible + ' results out of ' + totalCallouts + ' callouts';
+        }
+    }
+
+    // Show "no results" message if needed
+    let noResultsMsg = document.getElementById('calloutNoResults');
+    if (totalVisible === 0 && query !== '') {
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('div');
+            noResultsMsg.id = 'calloutNoResults';
+            noResultsMsg.className = 'no-search-results';
+            const icon = document.createElement('div');
+            icon.className = 'no-search-results-icon';
+            icon.textContent = '🔍';
+            const text = document.createElement('div');
+            text.setAttribute('data-en', 'No callouts found matching your search.');
+            text.setAttribute('data-it', 'Nessun callout trovato per la tua ricerca.');
+            text.textContent = currentLang === 'it' ? 'Nessun callout trovato per la tua ricerca.' : 'No callouts found matching your search.';
+            noResultsMsg.appendChild(icon);
+            noResultsMsg.appendChild(text);
+            document.getElementById('callouts').appendChild(noResultsMsg);
+        }
+        noResultsMsg.style.display = 'block';
+    } else if (noResultsMsg) {
+        noResultsMsg.style.display = 'none';
+    }
+}
+
+function filterFaq(query) {
+    query = query.toLowerCase().trim();
+    const faqItems = document.querySelectorAll('#faq .faq-item');
+    const resultsEl = document.getElementById('faqSearchResults');
+    let totalVisible = 0;
+
+    faqItems.forEach(function(item) {
+        const questionEl = item.querySelector('.faq-question span:first-child');
+        const answerEl = item.querySelector('.faq-answer');
+        const questionText = questionEl ? questionEl.textContent.toLowerCase() : '';
+        const answerText = answerEl ? answerEl.textContent.toLowerCase() : '';
+
+        // Remove previous highlights
+        if (questionEl) questionEl.innerHTML = questionEl.textContent;
+        if (answerEl) answerEl.innerHTML = answerEl.textContent;
+
+        if (query === '' || questionText.includes(query) || answerText.includes(query)) {
+            item.classList.remove('hidden');
+            totalVisible++;
+
+            // Highlight matches
+            if (query !== '') {
+                highlightText(questionEl, query);
+                highlightText(answerEl, query);
+            }
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+
+    // Update results count
+    if (query === '') {
+        resultsEl.textContent = '';
+    } else {
+        const lang = currentLang;
+        if (lang === 'it') {
+            resultsEl.textContent = totalVisible + ' risultati su ' + faqItems.length + ' domande';
+        } else {
+            resultsEl.textContent = totalVisible + ' results out of ' + faqItems.length + ' questions';
+        }
+    }
+
+    // Show "no results" message if needed
+    let noResultsMsg = document.getElementById('faqNoResults');
+    if (totalVisible === 0 && query !== '') {
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('div');
+            noResultsMsg.id = 'faqNoResults';
+            noResultsMsg.className = 'no-search-results';
+            const icon = document.createElement('div');
+            icon.className = 'no-search-results-icon';
+            icon.textContent = '🔍';
+            const text = document.createElement('div');
+            text.setAttribute('data-en', 'No questions found matching your search.');
+            text.setAttribute('data-it', 'Nessuna domanda trovata per la tua ricerca.');
+            text.textContent = currentLang === 'it' ? 'Nessuna domanda trovata per la tua ricerca.' : 'No questions found matching your search.';
+            noResultsMsg.appendChild(icon);
+            noResultsMsg.appendChild(text);
+            document.getElementById('faq').appendChild(noResultsMsg);
+        }
+        noResultsMsg.style.display = 'block';
+    } else if (noResultsMsg) {
+        noResultsMsg.style.display = 'none';
+    }
+}
+
+function highlightText(element, query) {
+    if (!element || !query) return;
+    const text = element.textContent;
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp('(' + escaped + ')', 'gi');
+    element.innerHTML = text.replace(regex, '<span class="search-highlight">$1</span>');
+}
+
 </script>
 
     <button class="scroll-top" onclick="scrollToTop()" title="Back to top">&#8593;</button>
