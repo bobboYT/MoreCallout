@@ -856,10 +856,16 @@
     <!-- NEWS FEED -->
     <div class="card reveal">
         <h3 data-en="Latest News" data-it="Ultime Novità">Latest News</h3>
+        
         <div class="news-card">
-            <div class="news-date">8 August 2026 <span class="news-badge">NEW</span></div>
+            <div class="news-date">9 August 2026 <span class="news-badge">NEW</span></div>
             <div class="news-title" data-en="Summer Break" data-it="Pausa Estiva">Summer Break</div>
             <div class="news-desc" data-en="GTA V plugin updates are paused until September. The current version remains available for download!" data-it="Gli aggiornamenti del plugin GTA V sono sospesi fino a settembre. La versione attuale resta disponibile!">GTA V plugin updates are paused until September. The current version remains available for download!</div>
+        </div>
+        <div class="news-card">
+            <div class="news-date">9 August 2026 <span class="news-badge">BETA</span></div>
+            <div class="news-title" data-en="v0.0.1.0 Beta.1 is now available!" data-it="v0.0.1.0 Beta.1 è ora disponibile!">v0.0.1.0 Beta.1 is now available!</div>
+            <div class="news-desc" data-en="You can find all the information in the changelog." data-it="Tutte le informazioni le trovate nel changelog.">You can find all the information in the changelog.</div>
         </div>
         <div class="news-card">
             <div class="news-date">8 August 2026 <span class="news-badge">Update</span></div>
@@ -1046,10 +1052,10 @@
         <div class="download-grid">
             <div class="download-card beta">
                 <div class="download-card-header">
-                    <span class="download-version">v0.0.0.9-beta.3</span>
+                    <span class="download-version">v0.0.1.0-beta.1</span>
                     <span class="download-badge beta">BETA</span>
                 </div>
-                <div class="download-meta" data-en="Released July 20, 2026 - 58 callouts - Testing phase" data-it="Rilasciata il 20 Luglio 2026 - 58 callout - Fase di test">Released July 20, 2026 - 58 callouts - Testing phase</div>
+                <div class="download-meta" data-en="Released August 9, 2026 - 58 callouts - Testing phase" data-it="Rilasciata il 9 Agosto 2026 - 58 callout - Fase di test">Released August 9, 2026 - 58 callouts - Testing phase</div>
                 <ul class="file-list">
                     <li class="file-item">
                         <span class="file-name"><span class="file-icon">&#128230;</span> MoreCallout.dll</span>
@@ -1273,8 +1279,35 @@ EnableAnimals=true</div>
 
 <!-- CHANGELOG SECTION -->
 <section id="changelog" class="section" style="padding-top: 140px;">
-    <div class="version latest">
-
+     <div class="version latest">
+        <div class="version-header">
+            <span class="version-number">Version 0.0.1.0 Beta.1</span>
+        </div>
+        <div class="changelog-section-title">&#127775; <span data-en="New Features" data-it="Nuove Funzionalita">New Features</span></div>
+        <ul class="feature-list">
+            <li data-en="EntityGuard System - Safe entity access after game pauses or fiber sleeps, preventing crashes when peds/vehicles despawn mid-scenario" data-it="EntityGuard System - Accesso sicuro alle entita dopo pause o sleep, previene crash quando ped/veicoli despawnano durante lo scenario">EntityGuard System - Safe entity access after game pauses or fiber sleeps, preventing crashes when peds/vehicles despawn mid-scenario</li>
+            <li data-en="CalloutStats Tracking - Every callout outcome is logged (arrests, escapes, response time). Ready for future reactive callouts based on your playstyle" data-it="CalloutStats Tracking - Ogni esito callout viene registrato (arresti, fughe, tempo risposta). Pronto per futuri callout reattivi basati sul tuo stile di gioco">CalloutStats Tracking - Every callout outcome is logged (arrests, escapes, response time). Ready for future reactive callouts based on your playstyle</li>
+            <li data-en="Procedural Spawn Points - Less reliance on fixed coordinates, more variety in callout locations across the map" data-it="Spawn Procedurali - Meno dipendenza da coordinate fisse, piu varieta nelle location dei callout sulla mappa">Procedural Spawn Points - Less reliance on fixed coordinates, more variety in callout locations across the map</li>
+            <li data-en="Robust INI Parser - Config file now handles values containing = or inline comments without breaking" data-it="Parser INI Robusto - Il file config ora gestisce valori contenenti = o commenti inline senza rompersi">Robust INI Parser - Config file now handles values containing = or inline comments without breaking</li>
+            <li data-en="Centralized Constants - All spawn distances, contact ranges and tick thresholds unified for easier tuning" data-it="Costanti Centralizzate - Tutte le distanze di spawn, range contatto e tick unificati per tuning piu semplice">Centralized Constants - All spawn distances, contact ranges and tick thresholds unified for easier tuning</li>
+        </ul>
+        <div class="changelog-section-title">&#128680; <span data-en="Emergency Fixes" data-it="Fix Emergenza">Emergency Fixes</span></div>
+        <ul class="feature-list">
+            <li data-en="BankRobbery - Fixed getaway driver getting stuck outside the vehicle during escape phase" data-it="BankRobbery - Fix autista fuga bloccato fuori dal veicolo durante la fase di fuga">BankRobbery - Fixed getaway driver getting stuck outside the vehicle during escape phase</li>
+            <li data-en="ActiveShooter - Fixed civilians and shooters freezing or throwing exceptions after combat sleep cycles" data-it="ActiveShooter - Fix civili e sparatori che si bloccano o generano eccezioni dopo cicli di sleep in combattimento">ActiveShooter - Fixed civilians and shooters freezing or throwing exceptions after combat sleep cycles</li>
+            <li data-en="AbandonedVehicle - Complete refactor onto AdvancedCallout; driver return logic now 100% reliable" data-it="AbandonedVehicle - Refactor completo su AdvancedCallout; logica ritorno conducente ora affidabile al 100%">AbandonedVehicle - Complete refactor onto AdvancedCallout; driver return logic now 100% reliable</li>
+            <li data-en="BurglaryCallouts - Complete refactor onto AdvancedCallout; eliminated 400+ lines of duplicated lifecycle code" data-it="BurglaryCallouts - Refactor completo su AdvancedCallout; eliminate 400+ righe di codice duplicato">BurglaryCallouts - Complete refactor onto AdvancedCallout; eliminated 400+ lines of duplicated lifecycle code</li>
+        </ul>
+        <div class="changelog-section-title">&#128295; <span data-en="🔧 Stability and Performance" data-it="🔧 Stabilità e Performance">🔧 Stability and Performance</span></div>
+        <ul class="feature-list">
+            <li data-en="Thread-Safe Lifecycle - CalloutLoop wrapped in try/catch with guaranteed cleanup on unexpected failure" data-it="Ciclo Vita Thread-Safe - CalloutLoop avvolto in try/catch con cleanup garantito in caso di fallimento inatteso">Thread-Safe Lifecycle - CalloutLoop wrapped in try/catch with guaranteed cleanup on unexpected failure</li>
+            <li data-en="Memory Leak Prevention - Witnesses and additional resources always cleaned up, even on forced termination" data-it="Prevenzione Memory Leak - Testimoni e risorse aggiuntive sempre puliti, anche su terminazione forzata">Memory Leak Prevention - Witnesses and additional resources always cleaned up, even on forced termination</li>
+            <li data-en="Removed Dead Code - Eliminated unused time-based modifiers and broken weekend checks" data-it="Rimosso Codice Morto - Eliminati modificatori temporali non usati e check weekend rotti">Removed Dead Code - Eliminated unused time-based modifiers and broken weekend checks</li>
+            <li data-en="Backward Compatibility - LightweightCallout and all legacy callouts remain fully functional" data-it="Retrocompatibilita - LightweightCallout e tutti i callout legacy rimangono pienamente funzionali">Backward Compatibility - LightweightCallout and all legacy callouts remain fully functional</li>
+        </ul>
+    </div>
+    
+    <div class="version reveal">
              <div class="version-header">
             <span class="version-number">Version 0.0.0.9</span>
             <span class="badge-latest">LATEST</span>
