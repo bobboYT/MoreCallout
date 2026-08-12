@@ -811,17 +811,28 @@
     <!-- SCREENSHOT GALLERY -->
     <div class="gallery-section">
         <div class="gallery-main">
-            <button class="gallery-arrow gallery-prev" onclick="prevScreenshot()">&#10094;</button>
-            <img src="screenshot1.png" alt="MoreCallout gameplay screenshot" class="gallery-img" id="mainScreenshot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="gallery-placeholder" style="display:none; width:100%; aspect-ratio:16/9; align-items:center; justify-content:center; color:var(--text-muted); font-size:1.1rem; flex-direction:column; gap:0.5rem;"><span style="font-size:3rem;">📸</span><span data-en="Upload screenshot1.png to GitHub" data-it="Carica screenshot1.png su GitHub">Upload screenshot1.png to GitHub</span></div>
-            <img src="screenshot2.png" alt="MoreCallout gameplay screenshot" class="gallery-img" id="mainScreenshot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="gallery-placeholder" style="display:none; width:100%; aspect-ratio:16/9; align-items:center; justify-content:center; color:var(--text-muted); font-size:1.1rem; flex-direction:column; gap:0.5rem;"><span style="font-size:3rem;">📸</span><span data-en="Upload screenshot2.png to GitHub" data-it="Carica screenshot2.png su GitHub">Upload screenshot1.png to GitHub</span></div>
-            <button class="gallery-arrow gallery-next" onclick="nextScreenshot()">&#10095;</button>
-        </div>
-        <div class="gallery-dots">
-            <span class="dot active" onclick="goToScreenshot(0)"></span>
-            <span class="dot" onclick="goToScreenshot(1)"></span>
-            <span class="dot" onclick="goToScreenshot(2)"></span>
-        </div>
-    </div>
+
+    <button class="gallery-arrow gallery-prev" onclick="prevScreenshot()">
+        &#10094;
+    </button>
+
+    <img
+        src="screenshot1.png"
+        alt="MoreCallout gameplay screenshot"
+        class="gallery-img"
+        id="mainScreenshot"
+    >
+
+    <button class="gallery-arrow gallery-next" onclick="nextScreenshot()">
+        &#10095;
+    </button>
+
+</div>
+
+<div class="gallery-dots">
+    <span class="dot active" onclick="goToScreenshot(0)"></span>
+    <span class="dot" onclick="goToScreenshot(1)"></span>
+</div>
     <div class="features-grid">
         <div class="feature-box reveal">
             <div class="icon">🎯</div>
