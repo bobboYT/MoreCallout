@@ -103,7 +103,6 @@
         main {
             padding-top: 140px;
         }
-        /* ===== SCROLL TO TOP ===== */
         .scroll-top {
             position: fixed;
             bottom: 2rem;
@@ -337,8 +336,8 @@
             align-items: center;
             gap: 8px;
         }
-        .feature-list, .fix-list { list-style: none; padding-left: 0; }
-        .feature-list li, .fix-list li {
+        .feature-list, .fix-list, .fix { list-style: none; padding-left: 0; }
+        .feature-list li, .fix-list li, .fix li {
             padding: 0.4rem 0 0.4rem 1.5rem;
             position: relative;
             color: var(--text-muted);
@@ -408,7 +407,6 @@
         .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
         [data-theme="light"] .theme-toggle { border-color: var(--border-light); }
 
-        /* ===== SCROLL ANIMATIONS ===== */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -422,7 +420,6 @@
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
 
-        /* ===== FAQ SECTION ===== */
         .faq-item {
             background: var(--bg-card);
             border-radius: 12px;
@@ -459,7 +456,6 @@
         }
         [data-theme="light"] .faq-question { color: var(--text-light); }
 
-        /* ===== NEWS SECTION ===== */
         .news-card {
             background: var(--bg-card);
             border-radius: 12px;
@@ -494,7 +490,6 @@
             text-transform: uppercase;
         }
 
-        /* ===== GALLERY ===== */
         .gallery-section {
             margin-top: 3rem;
             max-width: 900px;
@@ -573,40 +568,6 @@
             background: var(--accent);
             transform: scale(1.3);
         }
-        /* ===== SCROLL TO TOP ===== */
-        .scroll-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: white;
-            border: none;
-            font-size: 1.3rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 99;
-            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
-        }
-        .scroll-top.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .scroll-top:hover {
-            background: var(--accent-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
-        }
-        [data-theme="light"] .scroll-top {
-            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.2);
-        }
 
         @media (max-width: 768px) {
             .lang-switcher { position: static; justify-content: center; margin-bottom: 1rem; }
@@ -618,7 +579,6 @@
             section[id] { padding-top: 160px !important; }
         }
     
-        /* ===== DOWNLOAD SECTION ===== */
         .download-tabs {
             display: flex;
             gap: 4px;
@@ -706,7 +666,6 @@
         .btn-download-card.beta { border-color: var(--beta-warning); color: var(--beta-warning); }
         .btn-download-card.beta:hover { background: var(--beta-warning); color: #1a1a2e; }
 
-        /* ===== SEARCH BAR ===== */
         .search-bar-wrapper {
             margin-bottom: 1.5rem;
             position: relative;
@@ -774,10 +733,9 @@
             background: var(--card-light);
             color: var(--text-light);
         }
-
 </style>
 <base target="_blank">
-<base target="_blank">
+</head>
 <body>
 
 <header>
@@ -855,7 +813,7 @@
     <!-- NEWS FEED -->
      <div class="card reveal">    
          <div class="news-cardl">
-        <h3 data-en="Latest News" data-it="Ultime Novità">Latest News</h3>
+            <h3 data-en="Latest News" data-it="Ultime Novità">Latest News</h3>
          </div>
 
           <div class="news-card">
@@ -937,7 +895,6 @@
     <div class="category reveal">
         <h2>📋 <span data-en="Active Callouts" data-it="Chiamate Attive">Active Callouts</span> <span class="count">35</span></h2>
 
-        
 <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Food Poisoning <span style="color: #ff4d4d; font-weight: bold;">(IN BETA VERSION)</span></div><div class="callout-desc" data-en="Respond to a local establishment reporting severe food poisoning cases, assist medical responders, and investigate potential health code violations." data-it="Intervieni presso un locale a seguito di casi di intossicazione alimentare grave, assisti i soccorsi medici e indaga su potenziali violazioni delle norme igienico-sanitarie.">Respond to a local establishment reporting severe food poisoning cases, assist medical responders, and investigate potential health code violations.</div></div></div>
 <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Stalking case <span style="color: #ff4d4d; font-weight: bold;">(IN BETA VERSION)</span></div><div class="callout-desc" data-en="Investigate a report from a victim being harassed or followed, identify the stalker, and ensure the safety of the individual." data-it="Indaga sulla segnalazione di una vittima molestata o seguita, identifica lo stalker e garantisci la sicurezza della persona.">Investigate a report from a victim being harassed or followed, identify the stalker, and ensure the safety of the individual.</div></div></div>
 <div class="callout"><div class="callout-icon">📌</div><div class="callout-content"><div class="callout-name">Person who paints graffiti <span style="color: #ff4d4d; font-weight: bold;">(IN BETA VERSION)</span></div><div class="callout-desc" data-en="A report of vandalism in progress on public or private property; locate the tagger and prevent further damage." data-it="Segnalazione di un atto di vandalismo in corso su una proprietà pubblica o privata; individua il writer e previeni ulteriori danni.">A report of vandalism in progress on public or private property; locate the tagger and prevent further damage.</div></div></div>
@@ -975,6 +932,7 @@
 
     </div>
 </section>
+
 <!-- DOWNLOAD SECTION -->
 <section id="download" class="section" style="padding-top: 140px;">
     <div class="card reveal">
@@ -1032,7 +990,8 @@
                         <span class="file-size">1785 KB</span>
                     </li>
                     <li class="file-item">
-                        <span class="file-name"><span class="file-icon">&#9881;</span> MoreCallout</span>
+                        <!-- ICONA CAMBIATA IN CARTELLA -->
+                        <span class="file-name"><span class="file-icon">&#128193;</span> MoreCallout</span>
                         <span class="file-size">626 KB</span>
                     </li>
                     <li class="file-item">
@@ -1181,7 +1140,7 @@ EnableAnimals=true</div>
             <span class="faq-icon">▼</span>
         </div>
         <div class="faq-answer" data-en="Yes! More Callout is fully compatible with other callout plugins like StopThePed, Ultimate Backup, and others. Each plugin manages its own callouts independently." data-it="Sì! More Callout è pienamente compatibile con altri plugin callout come StopThePed, Ultimate Backup e altri. Ogni plugin gestisce i propri callout in modo indipendente.">
-            Yes! More Callout is fully compatible with other callout plugins like StopThePed, Ultimate Backup, and others. Each plugin manages its own callouts independently.
+            Yes! More Callout is fully compatible with other callout plugins like StopThePed, Ultimate Backup and others. Each plugin manages its own callouts independently.
         </div>
     </div>
 
@@ -1219,10 +1178,72 @@ EnableAnimals=true</div>
 <!-- CHANGELOG SECTION -->
 <section id="changelog" class="section" style="padding-top: 140px;">
     
+    <!-- NUOVA VERSIONE 0.0.2.4 AGGIUNTA -->
     <div class="version latest">
+        <div class="version-header">
+            <span class="version-number">🛠️ Version 0.0.2.4</span>
+            <span class="badge-latest">LATEST</span>
+        </div>
+
+        <!-- NEW CALLOUTS -->
+        <div class="changelog-section-title">
+            🆕 <span data-en="NEW CALLOUTS" data-it="NUOVE CHIAMATE">NEW CALLOUTS</span>
+        </div>
+        <ul class="fix">
+            <li data-en="FoodPoisoning: Assist a person who feels ill after eating and organize medical rescue." data-it="FoodPoisoning: Presta soccorso a una persona che sta male dopo aver mangiato e organizza i soccorsi medici.">FoodPoisoning: Assist a person who feels ill after eating and organize medical rescue.</li>
+            <li data-en="Stalking: Listen to the victim, identify the suspect, and intervene. The suspect may either cooperate or flee." data-it="Stalking: Ascolta la vittima, individua il sospetto e intervieni. Il sospetto può collaborare o tentare la fuga.">Stalking: Listen to the victim, identify the suspect, and intervene. The suspect may either cooperate or flee.</li>
+            <li data-en="SuspiciousPersonNearAirport: Investigate a suspicious person reported by airport security." data-it="SuspiciousPersonNearAirport: Indaga su una persona sospetta segnalata dalla sicurezza dell'aeroporto.">SuspiciousPersonNearAirport: Investigate a suspicious person reported by airport security.</li>
+            <li data-en="PersonPaintingGraffiti: Respond to a report of unauthorized graffiti, with options to issue a warning, detain the suspect, or initiate a pursuit if they flee." data-it="PersonPaintingGraffiti: Intervieni per un murales non autorizzato; puoi emettere un richiamo, fermare il sospetto o iniziare un inseguimento se fugge.">PersonPaintingGraffiti: Respond to a report of unauthorized graffiti, with options to issue a warning, detain the suspect, or initiate a pursuit if they flee.</li>
+            <li data-en="StolenEmergencyVehicle: Recover a stolen emergency vehicle, such as an ambulance, fire truck, or police car." data-it="StolenEmergencyVehicle: Recupera un veicolo di emergenza rubato, come un'ambulanza, un camion dei vigili del fuoco o un'auto della polizia.">StolenEmergencyVehicle: Recover a stolen emergency vehicle, such as an ambulance, fire truck, or police car.</li>
+            <li data-en="StolenVehicle: Track down a stolen vehicle and order the driver to pull over; they may stop or attempt to flee." data-it="StolenVehicle: Rintraccia un veicolo rubato e ordina al conducente di accostare; potrebbe fermarsi o tentare la fuga.">StolenVehicle: Track down a stolen vehicle and order the driver to pull over; they may stop or attempt to flee.</li>
+            <li data-en="AbandonedVehicle: Inspect an abandoned vehicle, check if it is reported stolen, and log the result." data-it="AbandonedVehicle: Ispeziona un veicolo abbandonato, verifica se risulta rubato e registra il risultato.">AbandonedVehicle: Inspect an abandoned vehicle, check if it is reported stolen, and log the result.</li>
+        </ul>
+
+        <!-- DISPATCH & RADIO COMMUNICATIONS -->
+        <div class="changelog-section-title">
+            📻 <span data-en="DISPATCH & RADIO COMMUNICATIONS" data-it="CENTRALE & COMUNICAZIONI RADIO">DISPATCH & RADIO COMMUNICATIONS</span>
+        </div>
+        <ul class="fix">
+            <li data-en="Added announcements describing the callout and its location in all 11 available languages." data-it="Aggiunti annunci che descrivono il callout e la sua posizione in tutte le 11 lingue disponibili.">Added announcements describing the callout and its location in all 11 available languages.</li>
+            <li data-en="Added microphone support to communicate with dispatch: report your status, call for backup, or request to repeat the callout." data-it="Aggiunto il supporto al microfono per comunicare con la centrale: segnala il tuo stato, richiedi rinforzi o chiedi di ripetere la chiamata.">Added microphone support to communicate with dispatch: report your status, call for backup, or request to repeat the callout.</li>
+            <li data-en="Offline speech recognition included for Italian and English. Other languages require a compatible Windows speech recognizer." data-it="Riconoscimento vocale offline incluso per italiano e inglese. Le altre lingue richiedono un riconoscimento vocale Windows compatibile.">Offline speech recognition included for Italian and English. Other languages require a compatible Windows speech recognizer.</li>
+            <li data-en="Saying 'Code Four' allows you to end the currently active MoreCallout callout." data-it="Pronunciare 'Code Four' permette di terminare la chiamata MoreCallout attualmente attiva.">Saying "Code Four" allows you to end the currently active MoreCallout callout.</li>
+            <li data-en="Added walkie-talkie audio effects at the start and end of radio transmissions." data-it="Aggiunti effetti audio walkie-talkie all'inizio e alla fine delle trasmissioni radio.">Added walkie-talkie audio effects at the start and end of radio transmissions.</li>
+            <li data-en="When dispatch does not understand a command, it will verbally ask you to repeat it." data-it="Quando la centrale non comprende un comando, chiederà verbalmente di ripeterlo.">When dispatch does not understand a command, it will verbally ask you to repeat it.</li>
+            <li data-en="Added optional background radio chatter (can be toggled on/off) in all 11 languages." data-it="Aggiunto un brusio radio di sottofondo opzionale (attivabile/disattivabile) in tutte le 11 lingue.">Added optional background radio chatter (can be toggled on/off) in all 11 languages.</li>
+            <li data-en="Improved audio management alongside sirens and other plugins; dispatch volume is now adjustable." data-it="Migliorata la gestione audio insieme a sirene e altri plugin; il volume della centrale è ora regolabile.">Improved audio management alongside sirens and other plugins; dispatch volume is now adjustable.</li>
+            <li data-en="Updated StatusCheck to indicate the option to respond via radio." data-it="Aggiornato StatusCheck per indicare la possibilità di rispondere tramite radio.">Updated StatusCheck to indicate the option to respond via radio.</li>
+        </ul>
+
+        <!-- VEHICLES -->
+        <div class="changelog-section-title">
+            🚗 <span data-en="VEHICLES" data-it="VEICOLI">VEHICLES</span>
+        </div>
+        <ul class="fix">
+            <li data-en="Added left, right, and hazard turn signals, complete with visual indicators, sound effects, and customizable keybinds." data-it="Aggiunti indicatori di direzione sinistro, destro e quattro frecce, completi di indicatori visivi, effetti sonori e tasti personalizzabili.">Added left, right, and hazard turn signals, complete with visual indicators, sound effects, and customizable keybinds.</li>
+            <li data-en="Added a seatbelt system featuring fastened/unfastened icons, a driving warning chime, and protection against windshield ejection." data-it="Aggiunto un sistema di cinture di sicurezza con icone allacciato/sallacciato, cicalino di avviso alla guida e protezione dall'espulsione dal parabrezza.">Added a seatbelt system featuring fastened/unfastened icons, a driving warning chime, and protection against windshield ejection.</li>
+            <li data-en="Improved sound effects for turn signals, seatbelt buckling/unbuckling, and the seatbelt warning chime." data-it="Migliorati gli effetti sonori per frecce, aggancio/sgancio cinture e cicalino di avviso.">Improved sound effects for turn signals, seatbelt buckling/unbuckling, and the seatbelt warning chime.</li>
+        </ul>
+
+        <!-- MENUS, SHOPS, & BUG FIXES -->
+        <div class="changelog-section-title">
+            🏪 <span data-en="MENUS, SHOPS, & BUG FIXES" data-it="MENU, NEGOZI & BUG FIX">MENUS, SHOPS, & BUG FIXES</span>
+        </div>
+        <ul class="fix">
+            <li data-en="Redesigned the graphic interface for the main menu and submenus." data-it="Riprogettata l'interfaccia grafica per il menu principale e i sottomenu.">Redesigned the graphic interface for the main menu and submenus.</li>
+            <li data-en="Made compatible food kiosks functional for purchasing food and drinks." data-it="Resi funzionali i chioschi di cibo compatibili per l'acquisto di cibo e bevande.">Made compatible food kiosks functional for purchasing food and drinks.</li>
+            <li data-en="Added dedicated icons for kiosks: visible on the main map, but shown on the minimap only when nearby." data-it="Aggiunte icone dedicate per i chioschi: visibili sulla mappa principale, ma mostrate sulla minimappa solo quando si è nelle vicinanze.">Added dedicated icons for kiosks: visible on the main map, but shown on the minimap only when nearby.</li>
+            <li data-en="Improved entity spawn points and scene loading, particularly for the Stalking callout." data-it="Migliorati i punti di spawn delle entità e il caricamento della scena, in particolare per la chiamata Stalking.">Improved entity spawn points and scene loading, particularly for the Stalking callout.</li>
+            <li data-en="SuspiciousPersonNearAirport can now be triggered even when far from the airport." data-it="SuspiciousPersonNearAirport ora può essere attivato anche quando si è lontani dall'aeroporto.">SuspiciousPersonNearAirport can now be triggered even when far from the airport.</li>
+            <li data-en="Fixed the pull-over command in StolenVehicle and StolenEmergencyVehicle." data-it="Corretto il comando di alt (pull-over) in StolenVehicle e StolenEmergencyVehicle.">Fixed the pull-over command in StolenVehicle and StolenEmergencyVehicle.</li>
+            <li data-en="Fixed a timer issue that could prevent background radio chatter from playing." data-it="Risolto un problema con i timer che poteva impedire la riproduzione del brusio radio di sottofondo.">Fixed a timer issue that could prevent background radio chatter from playing.</li>
+            <li data-en="Optimized DLL loading by separating audio files without removing any sounds or features." data-it="Ottimizzato il caricamento delle DLL separando i file audio senza rimuovere suoni o funzionalità.">Optimized DLL loading by separating audio files without removing any sounds or features.</li>
+        </ul>
+    </div>
+    
+    <div class="version reveal">
     <div class="version-header">
         <span class="version-number">Version 0.0.1.3</span>
-        <span class="badge-latest">LATEST</span>
     </div>
 
     <!-- NEW CALLOUTS -->
@@ -1492,18 +1513,15 @@ EnableAnimals=true</div>
 </footer>
 
 <script>
-// ===== SECTION NAVIGATION =====
 function showSection(sectionId, btn) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(sectionId).classList.add('active');
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     window.location.hash = sectionId;
-    // Scroll con offset per l'header fixed
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== LANGUAGE SWITCHER =====
 let currentLang = 'en';
 
 function setLang(lang) {
@@ -1529,7 +1547,6 @@ function setLang(lang) {
     localStorage.setItem('calloutpack-lang', lang);
 }
 
-// ===== DOWNLOAD TABS =====
 function switchDownloadTab(btn, panel) {
     document.querySelectorAll('.download-tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
@@ -1537,7 +1554,6 @@ function switchDownloadTab(btn, panel) {
     document.getElementById('download-' + panel).classList.add('active');
 }
 
-// ===== THEME TOGGLE =====
 function toggleTheme() {
     const body = document.body;
     const btn = document.querySelector('.theme-toggle');
@@ -1555,21 +1571,17 @@ function toggleTheme() {
     }
 }
 
-// ===== FAQ TOGGLE =====
 function toggleFaq(element) {
     const item = element.parentElement;
     const isOpen = item.classList.contains('open');
 
-    // Chiudi tutti gli altri
     document.querySelectorAll('.faq-item.open').forEach(faq => {
         if (faq !== item) faq.classList.remove('open');
     });
 
-    // Toggle corrente
     item.classList.toggle('open', !isOpen);
 }
 
-// ===== SCROLL REVEAL =====
 function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal');
 
@@ -1587,7 +1599,6 @@ function initScrollReveal() {
     reveals.forEach(el => observer.observe(el));
 }
 
-// ===== SCROLL HEADER & BACK TO TOP =====
 let lastScrollY = 0;
 let ticking = false;
 
@@ -1596,21 +1607,17 @@ function handleScroll() {
     const scrollTop = document.querySelector('.scroll-top');
     const currentScrollY = window.scrollY;
 
-    // Header hide/show
     if (currentScrollY > 100) {
         header.classList.add('scrolled');
         if (currentScrollY > lastScrollY && currentScrollY > 200) {
-            // Scrolling down
             header.classList.add('hidden');
         } else {
-            // Scrolling up
             header.classList.remove('hidden');
         }
     } else {
         header.classList.remove('scrolled', 'hidden');
     }
 
-    // Back to top button
     if (scrollTop) {
         scrollTop.classList.toggle('visible', currentScrollY > 500);
     }
@@ -1630,7 +1637,6 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== SCREENSHOT GALLERY =====
 const screenshots = [
     'screenshot1.png',
     'screenshot2.png'
@@ -1678,15 +1684,12 @@ function goToScreenshot(index) {
     updateScreenshot();
 }
 
-// ===== INIT =====
 document.addEventListener('DOMContentLoaded', function() {
-    // Language
     const savedLang = localStorage.getItem('calloutpack-lang');
     if (savedLang && savedLang !== 'en') {
         setLang(savedLang);
     }
 
-    // Theme
     const savedTheme = localStorage.getItem('calloutpack-theme');
     const themeBtn = document.querySelector('.theme-toggle');
     if (savedTheme === 'light') {
@@ -1694,7 +1697,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (themeBtn) themeBtn.textContent = '☀️';
     }
 
-    // Hash navigation
     const hash = window.location.hash.replace('#', '');
     if (hash && document.getElementById(hash)) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1705,11 +1707,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Scroll reveal
     initScrollReveal();
 });
 
-// ===== SEARCH FUNCTIONS =====
 function filterCallouts(query) {
     query = query.toLowerCase().trim();
     const categories = document.querySelectorAll('#callouts .category');
@@ -1728,7 +1728,6 @@ function filterCallouts(query) {
             const nameText = nameEl ? nameEl.textContent.toLowerCase() : '';
             const descText = descEl ? descEl.textContent.toLowerCase() : '';
 
-            // Remove previous highlights
             if (nameEl) nameEl.innerHTML = nameEl.textContent;
             if (descEl) descEl.innerHTML = descEl.textContent;
 
@@ -1737,7 +1736,6 @@ function filterCallouts(query) {
                 categoryVisible++;
                 totalVisible++;
 
-                // Highlight matches
                 if (query !== '') {
                     highlightText(nameEl, query);
                     highlightText(descEl, query);
@@ -1754,7 +1752,6 @@ function filterCallouts(query) {
         }
     });
 
-    // Update results count
     if (query === '') {
         resultsEl.textContent = '';
     } else {
@@ -1766,7 +1763,6 @@ function filterCallouts(query) {
         }
     }
 
-    // Show "no results" message if needed
     let noResultsMsg = document.getElementById('calloutNoResults');
     if (totalVisible === 0 && query !== '') {
         if (!noResultsMsg) {
@@ -1803,7 +1799,6 @@ function filterFaq(query) {
         const questionText = questionEl ? questionEl.textContent.toLowerCase() : '';
         const answerText = answerEl ? answerEl.textContent.toLowerCase() : '';
 
-        // Remove previous highlights
         if (questionEl) questionEl.innerHTML = questionEl.textContent;
         if (answerEl) answerEl.innerHTML = answerEl.textContent;
 
@@ -1811,7 +1806,6 @@ function filterFaq(query) {
             item.classList.remove('hidden');
             totalVisible++;
 
-            // Highlight matches
             if (query !== '') {
                 highlightText(questionEl, query);
                 highlightText(answerEl, query);
@@ -1821,7 +1815,6 @@ function filterFaq(query) {
         }
     });
 
-    // Update results count
     if (query === '') {
         resultsEl.textContent = '';
     } else {
@@ -1833,7 +1826,6 @@ function filterFaq(query) {
         }
     }
 
-    // Show "no results" message if needed
     let noResultsMsg = document.getElementById('faqNoResults');
     if (totalVisible === 0 && query !== '') {
         if (!noResultsMsg) {
@@ -1865,7 +1857,6 @@ function highlightText(element, query) {
     const regex = new RegExp('(' + escaped + ')', 'gi');
     element.innerHTML = text.replace(regex, '<span class="search-highlight">$1</span>');
 }
-
 </script>
 
     <button class="scroll-top" onclick="scrollToTop()" title="Back to top">&#8593;</button>
